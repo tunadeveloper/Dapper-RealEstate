@@ -18,6 +18,90 @@
     <None Include="wwwroot\uptown\js\.DS_Store" />
     <None Include="wwwroot\uptown\scss\.DS_Store" />
     <None Include="wwwroot\uptown\scss\bootstrap\.DS_Store" />
+    <None Include="wwwroot\windmill-dashboard\.git\COMMIT_EDITMSG" />
+    <None Include="wwwroot\windmill-dashboard\.git\config" />
+    <None Include="wwwroot\windmill-dashboard\.git\description" />
+    <None Include="wwwroot\windmill-dashboard\.git\FETCH_HEAD" />
+    <None Include="wwwroot\windmill-dashboard\.git\HEAD" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\applypatch-msg.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\commit-msg.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\fsmonitor-watchman.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\post-update.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\pre-applypatch.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\pre-commit.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\pre-merge-commit.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\pre-push.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\pre-rebase.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\pre-receive.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\prepare-commit-msg.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\hooks\update.sample" />
+    <None Include="wwwroot\windmill-dashboard\.git\index" />
+    <None Include="wwwroot\windmill-dashboard\.git\info\exclude" />
+    <None Include="wwwroot\windmill-dashboard\.git\logs\HEAD" />
+    <None Include="wwwroot\windmill-dashboard\.git\logs\refs\heads\main" />
+    <None Include="wwwroot\windmill-dashboard\.git\logs\refs\remotes\origin\main" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\02\c05b22cc78afc7b4155ed61d7f61f796e610d6" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\0d\d0a6241b9ffdcbf673aab3128a142186c4623b" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\17\54f9aa299b78e8d448d04695d382a9db1e42ec" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\18\372ba66818fd7e4449e3b9758045eecb77b491" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\1a\684deb0bd5e6b1175efbe8c1072c5c2ec14bae" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\2f\579b7d96da0923836f7c49a15d196a2a0c325c" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\38\bb2aa6d9ea8ce030603cea39c9e9dc808d6fb7" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\3d\e94e9e980428a1c1b4a22b7cbbe27ff6e58544" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\40\e713d87c1823465b3531fad1f58cad0556afe2" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\43\bdc059f5142f3157875cb3647050169c2b5f7d" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\46\a3cd43576505a68385e61107fffbdd72e8019a" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\4d\caf51958e491e34f6d0d85f62ffe24c0a88b01" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\4f\9bbd15d4e3d04dee91298ce6fd19034b2b9f8d" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\61\9f54beecec54ada7c59173465d0cbf03a52db9" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\64\14d4902b5708ae9619d91b9728bdbe207ce9f0" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\66\9e202b6e9a949dbc7c203923d33a691414e1bf" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\69\01cc73427ee06187abd51ef8b6aebe3dd9bcde" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\6f\9509c88bed7080d496fc5e1d87a9315e30549d" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\70\d354dc9d3618e1b6f1b70be37de7904dfc1991" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\82\4ef1407907338afcde7696923d7040a83399f2" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\8e\162e9745350b33cc5d89a864cd06f2613fa37d" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\96\3aeeb87e6cfa0a8dac9526653404ed98538e35" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\9d\da0540ac36f4e36e3f3bee66aea63ea4ef258d" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\a0\257e6115d7bdb4e51c5eb5ce6a8b247a43b307" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\a7\73460c4b2839f0b6022d1857bfcdcb354e8bec" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\ad\90622a97ed3bd17895d95a13f560bf49a3495d" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\b1\74bcd6db872fb2f563164c3aae2c82a9ad995b" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\b4\13be2da7cb16e0e97f31f2f5ca4f7590db43db" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\b4\49774e3ce038a15534d057859f7f1eb5cbba75" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\b5\12c09d476623ff4bf8d0d63c29b784925dbdf8" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\b5\c61c956711f981a41e95f7fcf0038436cfbb22" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\b9\26c70383d670d9c10968495c5dbef6d39258ec" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\c9\509ba686054554c47620c45a16252ebad99829" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\ca\1043d813bef8a09cd3abc9b2ba2e83d5cc2d11" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\cd\d69e3193e142e58ecf6c781bcca588b02fcee0" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\cf\670c4b40090f85ac9a2b7c224b6bc165d918e8" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\d4\7584574c1438247956c4364b76a4997e740503" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\d6\9f9e8fe91db89ecffaf29501018b8ddb2e4efa" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\de\e488d9079e7db33c36f039a5906e62b4693f8b" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\df\e0770424b2a19faf507a501ebfc23be8f54e7b" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\e2\18984cde760803159c5b187121e55533a5d13e" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\e4\a200424fe2d8525ae27ca22cb5bbee1fb9262b" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\e5\55db39515faa73366ebf01ac42d05fe0188b86" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\e6\497bd72647751330de5ae22e88878c9eb1a3aa" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\ec\cd608ebbe5988dd73a30576c74f836f1eaa61a" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\ed\e2ce0dca321e92baedbb148b49ab3d76d7fb06" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\f8\400a80083d509607544b168863bfe7c4e16c08" />
+    <None Include="wwwroot\windmill-dashboard\.git\objects\fc\ed29e5c6220107cf4adc8a8b58ea1916cc34bb" />
+    <None Include="wwwroot\windmill-dashboard\.git\refs\heads\main" />
+    <None Include="wwwroot\windmill-dashboard\.git\refs\remotes\origin\main" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\windmill-dashboard\.git\objects\info\" />
+    <Folder Include="wwwroot\windmill-dashboard\.git\objects\pack\" />
+    <Folder Include="wwwroot\windmill-dashboard\.git\refs\tags\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
   </ItemGroup>
 
 </Project>
