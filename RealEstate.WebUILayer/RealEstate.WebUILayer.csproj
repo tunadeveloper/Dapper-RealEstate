@@ -6,4 +6,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\uptown\.DS_Store" />
+    <None Include="wwwroot\uptown\css\.DS_Store" />
+    <None Include="wwwroot\uptown\css\bootstrap\.DS_Store" />
+    <None Include="wwwroot\uptown\css\css\.DS_Store" />
+    <None Include="wwwroot\uptown\fonts\.DS_Store" />
+    <None Include="wwwroot\uptown\fonts\flaticon\.DS_Store" />
+    <None Include="wwwroot\uptown\fonts\ionicons\fonts\.DS_Store" />
+    <None Include="wwwroot\uptown\images\.DS_Store" />
+    <None Include="wwwroot\uptown\js\.DS_Store" />
+    <None Include="wwwroot\uptown\scss\.DS_Store" />
+    <None Include="wwwroot\uptown\scss\bootstrap\.DS_Store" />
+  </ItemGroup>
+
 </Project>
