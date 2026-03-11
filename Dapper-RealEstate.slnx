@@ -1,1 +1,3 @@
-<Solution />
+<Solution>
+  <Project Path="RealEstate.WebAPILayer/RealEstate.WebAPILayer.csproj" />
+</Solution>
