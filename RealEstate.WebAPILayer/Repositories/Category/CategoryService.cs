@@ -15,7 +15,7 @@ namespace RealEstate.WebAPILayer.Repositories.Category
 
         public async Task<List<ResultCategoryDTO>> GetAllCategoryAsync()
         {
-            string query = "SELECT * FROM Category";
+            string query = "SELECT * FROM Categories";
             using (var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ResultCategoryDTO>(query);

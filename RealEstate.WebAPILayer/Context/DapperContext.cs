@@ -7,7 +7,7 @@ namespace RealEstate.WebAPILayer.Context
     {
         private readonly IConfiguration _configration;
         private readonly string _connectionString;
-        public DapperContext(IConfiguration configration, string connectionString)
+        public DapperContext(IConfiguration configration)
         {
             _configration = configration;
             _connectionString = _configration.GetConnectionString("DefaultConnection");
