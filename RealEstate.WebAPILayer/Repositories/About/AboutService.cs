@@ -1,3 +1,4 @@
+using Dapper;
 using RealEstate.WebAPILayer.Context;
 using RealEstate.WebAPILayer.DTOs.AboutDTOs;
 
@@ -12,29 +13,62 @@ namespace RealEstate.WebAPILayer.Repositories.About
             _context = context;
         }
 
-        public Task CreateAboutAsync(CreateAboutDTO createAboutDTO)
+        public async Task CreateAboutAsync(CreateAboutDTO createAboutDTO)
         {
-            throw new NotImplementedException();
+            string query = "INSERT INTO Abouts (AboutTitle, AboutDescription) VALUES (@aboutTitle, @aboutDescription)";
+            var parameters = new DynamicParameters();
+            parameters.Add("@aboutTitle", createAboutDTO.AboutTitle);
+            parameters.Add("@aboutDescription", createAboutDTO.AboutDescription);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
         }
 
-        public Task DeleteAboutAsync(int id)
+        public async Task DeleteAboutAsync(int id)
         {
-            throw new NotImplementedException();
+            string query = "DELETE FROM Abouts WHERE AboutId=@aboutId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@aboutId", id);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
         }
 
-        public Task<List<ResultAboutDTO>> GetAllAboutAsync()
+        public async Task<List<ResultAboutDTO>> GetAllAboutAsync()
         {
-            throw new NotImplementedException();
+            string query = "SELECT * FROM Abouts";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultAboutDTO>(query);
+                return values.ToList();
+            }
         }
 
-        public Task<ResultAboutDTO> GetByIdAboutAsync(int id)
+        public async Task<ResultAboutDTO> GetByIdAboutAsync(int id)
         {
-            throw new NotImplementedException();
+            string query = "SELECT * FROM Abouts WHERE AboutId=@aboutId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@aboutId", id);
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryFirstOrDefaultAsync<ResultAboutDTO>(query, parameters);
+                return values;
+            }
         }
 
-        public Task UpdateAboutAsync(UpdateAboutDTO updateAboutDTO)
+        public async Task UpdateAboutAsync(UpdateAboutDTO updateAboutDTO)
         {
-            throw new NotImplementedException();
+            string query = "UPDATE Abouts SET AboutTitle=@aboutTitle, AboutDescription=@aboutDescription WHERE AboutId=@aboutId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@aboutTitle", updateAboutDTO.AboutTitle);
+            parameters.Add("@aboutDescription", updateAboutDTO.AboutDescription);
+            parameters.Add("@aboutId", updateAboutDTO.AboutId);
+            using (var connection = _context.CreateConnection())
+            {
+                await connection.ExecuteAsync(query, parameters);
+            }
         }
     }
 }
