@@ -144,37 +144,72 @@ namespace RealEstate.WebAPILayer.Repositories.Statistics
 
         public decimal LastProductPrice()
         {
-            throw new NotImplementedException();
+            string query = "SELECT TOP(1)ProductPrice FROM Products ORDER BY ProductId DESC";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = connection.QueryFirstOrDefault<decimal>(query);
+                return values;
+            }
         }
 
         public decimal MaxProductPrice()
         {
-            throw new NotImplementedException();
+            string query = "SELECT MAX(ProductPrice) FROM Products";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = connection.QueryFirstOrDefault<decimal>(query);
+                return values;
+            }
         }
 
         public decimal MinProductPrice()
         {
-            throw new NotImplementedException();
+            string query = "SELECT MIN(ProductPrice) FROM Products";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = connection.QueryFirstOrDefault<decimal>(query);
+                return values;
+            }
         }
 
         public int PassiveCategoryCount()
         {
-            throw new NotImplementedException();
+            string query = "SELECT COUNT(*) FROM Categories WHERE CategoryStatus=0";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = connection.QueryFirstOrDefault<int>(query);
+                return values;
+            }
         }
 
         public int ProductCount()
         {
-            throw new NotImplementedException();
+            string query = "SELECT COUNT(*) FROM Products";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = connection.QueryFirstOrDefault<int>(query);
+                return values;
+            }
         }
 
         public string ProductNameByMaxProductPrice()
         {
-            throw new NotImplementedException();
+            string query = "SELECT ProductTitle FROM Products WHERE ProductPrice = (SELECT MAX(ProductPrice) FROM Products)";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = connection.QueryFirstOrDefault<string>(query);
+                return values;
+            }
         }
 
         public string ProductNameByMinProductPrice()
         {
-            throw new NotImplementedException();
+            string query = "SELECT ProductTitle FROM Products WHERE ProductPrice = (SELECT MIN(ProductPrice) FROM Products)";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = connection.QueryFirstOrDefault<string>(query);
+                return values;
+            }
         }
     }
 }
