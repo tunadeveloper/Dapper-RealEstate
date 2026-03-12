@@ -17,7 +17,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> GetCategory()
         {
             var values = await _categoryService.GetAllCategoryAsync();
             return Ok(values);

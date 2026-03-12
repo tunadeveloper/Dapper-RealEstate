@@ -10,5 +10,7 @@ namespace RealEstate.WebAPILayer.Repositories.Product
         Task DeleteProductAsync(int id);
         Task<ResultProductDTO> GetByIdProductAsync(int id);
         Task<List<ResultProductWithCategoryDTO>> GetAllProductWithCategoryAsync();
+        Task<List<ResultProductWithEmployeeDTO>> GetAllProductWithEmployeeAsync();
+        Task<List<ResultProductWithEmployeeAndCategoryDTO>> GetAllProductWithEmployeeAndCategoryAsync();
     }
 }

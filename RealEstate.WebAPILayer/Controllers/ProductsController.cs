@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RealEstate.WebAPILayer.DTOs.ProductDTOs;
 using RealEstate.WebAPILayer.Repositories.Product;
 
 namespace RealEstate.WebAPILayer.Controllers
@@ -15,9 +16,58 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> GetProduct()
         {
             var values = await _productService.GetAllProductWithCategoryAsync();
+            return Ok(values);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdProduct(int id)
+        {
+            var values = await _productService.GetByIdProductAsync(id);
+            return Ok(values);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(CreateProductDTO createProductDTO)
+        {
+            await _productService.CreateProductAsync(createProductDTO);
+            return Ok("Eklendi");
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct(UpdateProductDTO updateProductDTO)
+        {
+            await _productService.UpdateProductAsync(updateProductDTO);
+            return Ok("Güncellendi");
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            await _productService.DeleteProductAsync(id);
+            return Ok("Silindi");
+        }
+
+        [HttpGet("GetAllProductWithCategory")]
+        public async Task<IActionResult> GetAllProductWithCategory()
+        {
+            var values = await _productService.GetAllProductWithCategoryAsync();
+            return Ok(values);
+        }
+
+        [HttpGet("GetAllProductWithEmployee")]
+        public async Task<IActionResult> GetAllProductWithEmployee()
+        {
+            var values = await _productService.GetAllProductWithEmployeeAsync();
+            return Ok(values);
+        }
+
+        [HttpGet("GetAllProductWithEmployeeAndCategory")]
+        public async Task<IActionResult> GetAllProductWithEmployeeAndCategory()
+        {
+            var values = await _productService.GetAllProductWithEmployeeAndCategoryAsync();
             return Ok(values);
         }
     }

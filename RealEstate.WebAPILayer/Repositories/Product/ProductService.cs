@@ -45,7 +45,7 @@ namespace RealEstate.WebAPILayer.Repositories.Product
 
         public async Task<List<ResultProductDTO>> GetAllProductAsync()
         {
-            string query = "SELECT * FROM Product";
+            string query = "SELECT * FROM Products";
             using(var connection = _context.CreateConnection())
             {
                 var values = await connection.QueryAsync<ResultProductDTO>(query);
@@ -61,6 +61,27 @@ namespace RealEstate.WebAPILayer.Repositories.Product
                 var values = await connection.QueryAsync<ResultProductWithCategoryDTO>(query);
                 return values.ToList();
             }
+        }
+
+        public async Task<List<ResultProductWithEmployeeAndCategoryDTO>> GetAllProductWithEmployeeAndCategoryAsync()
+        {
+            string query = "SELECT ProductId, ProductTitle,ProductPrice,ProductCoverImage,ProductCity,ProductDistrict,ProductAddress,ProductDescription,EmployeeNameSurname,CategoryName FROM Products INNER JOIN Employee ON Products.EmployeeId=Employee.EmployeeId INNER JOIN Categories ON Products.ProductCategory=Categories.CategoryId";
+            using(var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultProductWithEmployeeAndCategoryDTO>(query);
+                return values.ToList();
+            }
+        }
+
+        public async Task<List<ResultProductWithEmployeeDTO>> GetAllProductWithEmployeeAsync()
+        {
+            string query = "SELECT ProductId,ProductTitle,ProductPrice,ProductCoverImage,ProductCity,ProductDistrict,ProductAddress,ProductDescription,EmployeeNameSurname FROM Products INNER JOIN Employee ON Products.EmployeeId=Employee.EmployeeId";
+            using(var connections = _context.CreateConnection())
+            {
+                var values = await connections.QueryAsync<ResultProductWithEmployeeDTO>(query);
+                return values.ToList();
+            }
+            
         }
 
         public async Task<ResultProductDTO> GetByIdProductAsync(int id)
@@ -83,7 +104,7 @@ namespace RealEstate.WebAPILayer.Repositories.Product
             parameters.Add("@productPrice", updateProductDTO.ProductPrice);
             parameters.Add("@productCoverImage", updateProductDTO.ProductCoverImage);
             parameters.Add("@productCity", updateProductDTO.ProductCity);
-            parameters.Add("@productDistirct", updateProductDTO.ProductDistrict);
+            parameters.Add("@productDistrict", updateProductDTO.ProductDistrict);
             parameters.Add("@productAddress", updateProductDTO.ProductAddress);
             parameters.Add("@productDescription", updateProductDTO.ProductDescription);
             parameters.Add("@productCategory", updateProductDTO.ProductCategory);
