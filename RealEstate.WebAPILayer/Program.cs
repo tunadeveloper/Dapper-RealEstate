@@ -1,6 +1,10 @@
 using RealEstate.WebAPILayer.Context;
 using RealEstate.WebAPILayer.Repositories.Category;
 using RealEstate.WebAPILayer.Repositories.Product;
+using RealEstate.WebAPILayer.Repositories.Message;
+using RealEstate.WebAPILayer.Repositories.Contact;
+using RealEstate.WebAPILayer.Repositories.About;
+using RealEstate.WebAPILayer.Repositories.Service;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<DapperContext>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<IMessageService, MessageService>();
+builder.Services.AddTransient<IContactService, ContactService>();
+builder.Services.AddTransient<IAboutService, AboutService>();
+builder.Services.AddTransient<IServiceService, ServiceService>();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
