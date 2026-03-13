@@ -1,4 +1,4 @@
-﻿namespace RealEstate.WebAPILayer.DTOs.ProductDTOs
+namespace RealEstate.WebAPILayer.DTOs.ProductDTOs
 {
     public class ResultProductDTO
     {
@@ -10,6 +10,7 @@
         public string ProductDistrict { get; set; }
         public string ProductAddress { get; set; }
         public string ProductDescription { get; set; }
+        public bool ProductIsPopular { get; set; }
         public int ProductCategory { get; set; }
         public int EmployeeId { get; set; }
     }
