@@ -14,8 +14,4 @@
     <PackageReference Include="X.PagedList" Version="10.5.9" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
-
 </Project>

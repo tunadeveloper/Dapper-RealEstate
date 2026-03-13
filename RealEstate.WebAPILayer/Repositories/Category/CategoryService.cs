@@ -18,7 +18,7 @@ namespace RealEstate.WebAPILayer.Repositories.Category
             string query = "INSERT INTO Categories (CategoryName, CategoryStatus) VALUES (@categoryName, @categoryStatus)";
             var parameters = new DynamicParameters();
             parameters.Add("@categoryName", createCategoryDTO.CategoryName);
-            parameters.Add("@categoryStatus", true);
+            parameters.Add("@categoryStatus");
             using (var connection = _context.CreateConnection())
             {
                 await connection.ExecuteAsync(query, parameters);
