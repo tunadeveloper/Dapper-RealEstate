@@ -92,7 +92,7 @@ namespace RealEstate.WebAPILayer.Repositories.Product
             parameters.Add("@productId", id);
             using(var connection = _context.CreateConnection())
             {
-                var values = await connection.QueryFirstOrDefaultAsync<ResultProductDTO>(query);
+                var values = await connection.QueryFirstOrDefaultAsync<ResultProductDTO>(query, parameters);
                 return values;
             }
         }
@@ -109,8 +109,9 @@ namespace RealEstate.WebAPILayer.Repositories.Product
 
         public async Task UpdateProductAsync(UpdateProductDTO updateProductDTO)
         {
-            string query = "UPDATE Products SET ProductTitle=@productTitle, ProductPrice=@productPrice,ProductCoverImage=@productCoverImage,ProductCity=@productCity,ProductDistrict=@productDistrict,ProductAddress=@productAddress,ProductDescription=@productDescription,ProductIsPopular=@productIsPopular,ProductCategory=@productCategory,EmployeeId=@employeeId";
+            string query = "UPDATE Products SET ProductTitle=@productTitle, ProductPrice=@productPrice,ProductCoverImage=@productCoverImage,ProductCity=@productCity,ProductDistrict=@productDistrict,ProductAddress=@productAddress,ProductDescription=@productDescription,ProductIsPopular=@productIsPopular,ProductCategory=@productCategory,EmployeeId=@employeeId WHERE ProductId=@productId";
             var parameters = new DynamicParameters();
+            parameters.Add("@productId", updateProductDTO.ProductId);
             parameters.Add("@productTitle", updateProductDTO.ProductTitle);
             parameters.Add("@productPrice", updateProductDTO.ProductPrice);
             parameters.Add("@productCoverImage", updateProductDTO.ProductCoverImage);

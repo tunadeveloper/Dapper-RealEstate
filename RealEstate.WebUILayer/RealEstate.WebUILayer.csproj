@@ -95,7 +95,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="DTOs\" />
     <Folder Include="wwwroot\windmill-dashboard\.git\objects\info\" />
     <Folder Include="wwwroot\windmill-dashboard\.git\objects\pack\" />
     <Folder Include="wwwroot\windmill-dashboard\.git\refs\tags\" />

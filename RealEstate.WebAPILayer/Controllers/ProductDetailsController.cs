@@ -15,10 +15,10 @@ namespace RealEstate.WebAPILayer.Controllers
             _productDetailService = productDetailService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ProductDetailList()
+        [HttpGet("GetList/{id}")]
+        public async Task<IActionResult> ProductDetailList(int id)
         {
-            var values = await _productDetailService.GetAllProductDetailAsync();
+            var values = await _productDetailService.GetAllProductDetailAsync(id);
             return Ok(values);
         }
 

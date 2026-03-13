@@ -45,13 +45,15 @@ namespace RealEstate.WebAPILayer.Repositories.ProductDetail
             }
         }
 
-        public async Task<List<ResultProductDetailDTO>> GetAllProductDetailAsync()
+        public async Task<ResultProductDetailDTO> GetAllProductDetailAsync(int id)
         {
-            string query = "SELECT * FROM ProductDetails";
+            string query = "SELECT * FROM ProductDetails INNER JOIN Products ON ProductDetails.ProductId=Products.ProductId WHERE ProductDetails.ProductId=@productId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@productId", id);
             using (var connection = _context.CreateConnection())
             {
-                var values = await connection.QueryAsync<ResultProductDetailDTO>(query);
-                return values.ToList();
+                var values = await connection.QueryFirstOrDefaultAsync<ResultProductDetailDTO>(query, parameters);
+                return values;
             }
         }
 

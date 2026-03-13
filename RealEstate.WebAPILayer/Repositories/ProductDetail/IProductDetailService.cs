@@ -4,7 +4,7 @@ namespace RealEstate.WebAPILayer.Repositories.ProductDetail
 {
     public interface IProductDetailService
     {
-        Task<List<ResultProductDetailDTO>> GetAllProductDetailAsync();
+        Task<ResultProductDetailDTO> GetAllProductDetailAsync(int id);
         Task CreateProductDetailAsync(CreateProductDetailDTO createProductDetailDTO);
         Task UpdateProductDetailAsync(UpdateProductDetailDTO updateProductDetailDTO);
         Task DeleteProductDetailAsync(int id);

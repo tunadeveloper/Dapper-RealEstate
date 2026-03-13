@@ -43,7 +43,7 @@ namespace RealEstate.WebAPILayer.Controllers
             return Ok("Güncellendi");
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             await _productService.DeleteProductAsync(id);
