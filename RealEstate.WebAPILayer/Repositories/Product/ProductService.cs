@@ -97,12 +97,12 @@ namespace RealEstate.WebAPILayer.Repositories.Product
             }
         }
 
-        public async Task<List<ResultProductDTO>> GetProductByIsPopularAsync()
+        public async Task<List<ResultPopularProductDTO>> GetTop3ProductByIsPopularAsync()
         {
-            string query = "SELECT * FROM Products WHERE ProductIsPopular=1";
+            string query = "SELECT TOP(3) p.ProductId,p.ProductTitle, p.ProductPrice,p.ProductCoverImage, p.ProductCity,p.ProductDistrict,p.ProductAddress,p.ProductDescription,c.CategoryName,e.EmployeeNameSurname,p.ProductIsPopular, pD.ProductSize, pD.ProductBedRoomCount,pD.ProductBathCount,pD.ProductRoomCount,pD.ProductGarageSize,pD.ProductBuildYear,pD.ProductLocation FROM Products p INNER JOIN Categories c ON p.ProductCategory = c.CategoryId INNER JOIN Employee e ON p.EmployeeId = e.EmployeeId INNER JOIN ProductDetails pD ON p.ProductId = pD.ProductId WHERE p.ProductIsPopular = 1";
             using (var connection = _context.CreateConnection())
             {
-                var values = await connection.QueryAsync<ResultProductDTO>(query);
+                var values = await connection.QueryAsync<ResultPopularProductDTO>(query);
                 return values.ToList();
             }
         }

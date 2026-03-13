@@ -12,6 +12,6 @@ namespace RealEstate.WebAPILayer.Repositories.Product
         Task<List<ResultProductWithCategoryDTO>> GetAllProductWithCategoryAsync();
         Task<List<ResultProductWithEmployeeDTO>> GetAllProductWithEmployeeAsync();
         Task<List<ResultProductWithEmployeeAndCategoryDTO>> GetAllProductWithEmployeeAndCategoryAsync();
-        Task<List<ResultProductDTO>> GetProductByIsPopularAsync();
+        Task<List<ResultPopularProductDTO>> GetTop3ProductByIsPopularAsync();
     }
 }

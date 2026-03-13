@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using RealEstate.WebAPILayer.DTOs.ProductDTOs;
 using RealEstate.WebAPILayer.Repositories.Product;
 
@@ -68,6 +68,13 @@ namespace RealEstate.WebAPILayer.Controllers
         public async Task<IActionResult> GetAllProductWithEmployeeAndCategory()
         {
             var values = await _productService.GetAllProductWithEmployeeAndCategoryAsync();
+            return Ok(values);
+        }
+
+        [HttpGet("GetTop3ProductByIsPopular")]
+        public async Task<IActionResult> GetTop3ProductByIsPopular()
+        {
+            var values = await _productService.GetTop3ProductByIsPopularAsync();
             return Ok(values);
         }
     }
