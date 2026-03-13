@@ -1,0 +1,17 @@
+namespace RealEstate.WebUILayer.DTOs.ProductDTOs
+{
+    public class ResultProductDTO
+    {
+        public int ProductId { get; set; }
+        public string ProductTitle { get; set; }
+        public decimal ProductPrice { get; set; }
+        public string ProductCoverImage { get; set; }
+        public string ProductCity { get; set; }
+        public string ProductDistrict { get; set; }
+        public string ProductAddress { get; set; }
+        public string ProductDescription { get; set; }
+        public bool ProductIsPopular { get; set; }
+        public int ProductCategory { get; set; }
+        public int EmployeeId { get; set; }
+    }
+}

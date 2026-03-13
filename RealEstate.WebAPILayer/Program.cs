@@ -7,6 +7,9 @@ using RealEstate.WebAPILayer.Repositories.About;
 using RealEstate.WebAPILayer.Repositories.Service;
 using RealEstate.WebAPILayer.Repositories.Subscriber;
 using RealEstate.WebAPILayer.Repositories.Statistics;
+using RealEstate.WebAPILayer.Repositories.Client;
+using RealEstate.WebAPILayer.Repositories.ProductDetail;
+using RealEstate.WebAPILayer.Repositories.Employee;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +24,9 @@ builder.Services.AddTransient<IAboutService, AboutService>();
 builder.Services.AddTransient<IServiceService, ServiceService>();
 builder.Services.AddTransient<ISubscriberService, SubscriberService>();
 builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+builder.Services.AddTransient<IClientService, ClientService>();
+builder.Services.AddTransient<IProductDetailService, ProductDetailService>();
+builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

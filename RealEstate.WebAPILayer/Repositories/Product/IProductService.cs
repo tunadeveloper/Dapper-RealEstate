@@ -1,4 +1,4 @@
-﻿using RealEstate.WebAPILayer.DTOs.ProductDTOs;
+using RealEstate.WebAPILayer.DTOs.ProductDTOs;
 
 namespace RealEstate.WebAPILayer.Repositories.Product
 {
@@ -12,5 +12,6 @@ namespace RealEstate.WebAPILayer.Repositories.Product
         Task<List<ResultProductWithCategoryDTO>> GetAllProductWithCategoryAsync();
         Task<List<ResultProductWithEmployeeDTO>> GetAllProductWithEmployeeAsync();
         Task<List<ResultProductWithEmployeeAndCategoryDTO>> GetAllProductWithEmployeeAndCategoryAsync();
+        Task<List<ResultProductDTO>> GetProductByIsPopularAsync();
     }
 }

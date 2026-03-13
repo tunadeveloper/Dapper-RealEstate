@@ -1,0 +1,9 @@
+namespace RealEstate.WebUILayer.DTOs.ServiceDTOs
+{
+    public class UpdateServiceDTO
+    {
+        public int ServiceId { get; set; }
+        public string ServiceDescription { get; set; }
+        public string ServiceIcon { get; set; }
+    }
+}

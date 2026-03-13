@@ -97,6 +97,16 @@ namespace RealEstate.WebAPILayer.Repositories.Product
             }
         }
 
+        public async Task<List<ResultProductDTO>> GetProductByIsPopularAsync()
+        {
+            string query = "SELECT * FROM Products WHERE ProductIsPopular=1";
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultProductDTO>(query);
+                return values.ToList();
+            }
+        }
+
         public async Task UpdateProductAsync(UpdateProductDTO updateProductDTO)
         {
             string query = "UPDATE Products SET ProductTitle=@productTitle, ProductPrice=@productPrice,ProductCoverImage=@productCoverImage,ProductCity=@productCity,ProductDistrict=@productDistrict,ProductAddress=@productAddress,ProductDescription=@productDescription,ProductIsPopular=@productIsPopular,ProductCategory=@productCategory,EmployeeId=@employeeId";

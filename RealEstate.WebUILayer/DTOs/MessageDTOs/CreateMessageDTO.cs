@@ -1,0 +1,10 @@
+namespace RealEstate.WebUILayer.DTOs.MessageDTOs
+{
+    public class CreateMessageDTO
+    {
+        public string MessageNameSurname { get; set; }
+        public string MessageEmail { get; set; }
+        public string MessageSubject { get; set; }
+        public string MessageDetail { get; set; }
+    }
+}

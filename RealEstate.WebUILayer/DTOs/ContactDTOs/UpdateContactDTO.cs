@@ -1,0 +1,11 @@
+namespace RealEstate.WebUILayer.DTOs.ContactDTOs
+{
+    public class UpdateContactDTO
+    {
+        public int ContactId { get; set; }
+        public string ContactPhoneNumber { get; set; }
+        public string ContactEmail { get; set; }
+        public string ContactAddress { get; set; }
+        public string ContactMapUrl { get; set; }
+    }
+}

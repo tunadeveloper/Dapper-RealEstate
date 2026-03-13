@@ -1,3 +1,5 @@
+@using RealEstate.WebUILayer.DTOs.EmployeeDTOs
+@model List<ResultEmployeeDTO>
 <section class="ftco-section ftco-agent ftco-no-pt">
     <div class="container">
         <div class="row justify-content-center pb-5">
@@ -7,50 +9,20 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3 ftco-animate">
-                <div class="agent">
-                    <div class="img">
-                        <img src="/uptown/images/team-1.jpg" class="img-fluid" alt="Colorlib Template">
-                    </div>
-                    <div class="desc">
-                        <h3><a href="properties.html">Can Yılmaz</a></h3>
-                        <p class="h-info"><span class="location">Portföy</span> <span class="details">&mdash; 10 İlan</span></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 ftco-animate">
-                <div class="agent">
-                    <div class="img">
-                        <img src="/uptown/images/team-2.jpg" class="img-fluid" alt="Colorlib Template">
-                    </div>
-                    <div class="desc">
-                        <h3><a href="properties.html">Mert Kılıç</a></h3>
-                        <p class="h-info"><span class="location">Portföy</span> <span class="details">&mdash; 15 İlan</span></p>
+            @foreach (var item in Model)
+            {
+                <div class="col-md-3 ftco-animate">
+                    <div class="agent">
+                        <div class="img">
+                            <img src="@item.EmployeeImageUrl" class="img-fluid" alt="Colorlib Template">
+                        </div>
+                        <div class="desc">
+                            <h3><a href="properties.html">@item.EmployeeNameSurname</a></h3>
+                            <p class="h-info"><span class="location">Portföy</span> <span class="details">&mdash; @item.TotalProductCount</span></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-3 ftco-animate">
-                <div class="agent">
-                    <div class="img">
-                        <img src="/uptown/images/team-3.jpg" class="img-fluid" alt="Colorlib Template">
-                    </div>
-                    <div class="desc">
-                        <h3><a href="properties.html">Buse Özbek</a></h3>
-                        <p class="h-info"><span class="location">Portföy</span> <span class="details">&mdash; 8 İlan</span></p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 ftco-animate">
-                <div class="agent">
-                    <div class="img">
-                        <img src="/uptown/images/team-4.jpg" class="img-fluid" alt="Colorlib Template">
-                    </div>
-                    <div class="desc">
-                        <h3><a href="properties.html">Aylin Sarp</a></h3>
-                        <p class="h-info"><span class="position">Portföy</span> <span class="details">&mdash; 22 İlan</span></p>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>
