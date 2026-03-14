@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using RealEstate.WebUILayer.Infrastructure;
 using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,7 +18,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddTransient<ApiAuthorizationMessageHandler>();
+builder.Services.AddHttpClient("RealEstateApi", client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7175/");
+}).AddHttpMessageHandler<ApiAuthorizationMessageHandler>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())

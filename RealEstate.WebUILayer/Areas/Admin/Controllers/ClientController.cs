@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RealEstate.WebUILayer.DTOs.ClientDTOs;
@@ -7,6 +8,7 @@ using X.PagedList.Extensions;
 namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class ClientController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -18,8 +20,8 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index(int? page)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7175/api/Clients");
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
+            var responseMessage = await client.GetAsync("api/Clients");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -39,10 +41,10 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateClient(CreateClientDTO createClientDTO)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
             var jsonData = JsonConvert.SerializeObject(createClientDTO);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:7175/api/Clients", stringContent);
+            var responseMessage = await client.PostAsync("api/Clients", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 TempData["Success"] = "Müşteri Başarıyla Eklendi";
@@ -54,8 +56,8 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> DeleteClient(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync($"https://localhost:7175/api/Clients/{id}");
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
+            var responseMessage = await client.DeleteAsync($"api/Clients/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 TempData["Success"] = "Müşteri Başarıyla Silindi";
@@ -68,8 +70,8 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateClient(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7175/api/Clients/{id}");
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
+            var responseMessage = await client.GetAsync($"api/Clients/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -82,10 +84,10 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateClient(UpdateClientDTO updateClientDTO)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
             var jsonData = JsonConvert.SerializeObject(updateClientDTO);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("https://localhost:7175/api/Clients", stringContent);
+            var responseMessage = await client.PutAsync("api/Clients", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 TempData["Success"] = "Müşteri Başarıyla Güncellendi";

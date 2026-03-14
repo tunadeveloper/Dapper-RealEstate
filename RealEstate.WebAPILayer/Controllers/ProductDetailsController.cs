@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.WebAPILayer.DTOs.ProductDetailDTOs;
 using RealEstate.WebAPILayer.Repositories.ProductDetail;
@@ -23,6 +24,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateProductDetail(CreateProductDetailDTO createProductDetailDTO)
         {
             await _productDetailService.CreateProductDetailAsync(createProductDetailDTO);
@@ -30,6 +32,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProductDetail(int id)
         {
             await _productDetailService.DeleteProductDetailAsync(id);
@@ -37,6 +40,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProductDetail(UpdateProductDetailDTO updateProductDetailDTO)
         {
             await _productDetailService.UpdateProductDetailAsync(updateProductDetailDTO);

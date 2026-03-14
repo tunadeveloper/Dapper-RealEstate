@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.WebAPILayer.DTOs.SubscriberDTOs;
@@ -31,6 +32,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteSubscriber(int id)
         {
             await _subscriberService.DeleteSubscriberAsync(id);
@@ -38,6 +40,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateSubscriber(UpdateSubscriberDTO updateSubscriberDTO)
         {
             await _subscriberService.UpdateSubscriberAsync(updateSubscriberDTO);

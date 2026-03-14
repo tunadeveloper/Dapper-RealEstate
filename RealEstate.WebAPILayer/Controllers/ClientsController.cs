@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.WebAPILayer.DTOs.ClientDTOs;
 using RealEstate.WebAPILayer.Repositories.Client;
@@ -23,6 +24,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateClient(CreateClientDTO createClientDTO)
         {
             await _clientService.CreateClientAsync(createClientDTO);
@@ -30,6 +32,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteClient(int id)
         {
             await _clientService.DeleteClientAsync(id);
@@ -37,6 +40,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateClient(UpdateClientDTO updateClientDTO)
         {
             await _clientService.UpdateClientAsync(updateClientDTO);

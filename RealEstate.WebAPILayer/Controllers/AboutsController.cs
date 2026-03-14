@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.WebAPILayer.DTOs.AboutDTOs;
@@ -24,6 +25,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateAbout(CreateAboutDTO createAboutDTO)
         {
             await _aboutService.CreateAboutAsync(createAboutDTO);
@@ -31,6 +33,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAbout(int id)
         {
             await _aboutService.DeleteAboutAsync(id);
@@ -38,6 +41,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAbout(UpdateAboutDTO updateAboutDTO)
         {
             await _aboutService.UpdateAboutAsync(updateAboutDTO);

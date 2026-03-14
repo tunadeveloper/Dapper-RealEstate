@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using RealEstate.WebAPILayer.Context;
 using RealEstate.WebAPILayer.Repositories.Category;
 using RealEstate.WebAPILayer.Repositories.Product;
@@ -10,8 +12,12 @@ using RealEstate.WebAPILayer.Repositories.Statistics;
 using RealEstate.WebAPILayer.Repositories.Client;
 using RealEstate.WebAPILayer.Repositories.ProductDetail;
 using RealEstate.WebAPILayer.Repositories.Employee;
+using RealEstate.WebAPILayer.Repositories.Auth;
 using Scalar.AspNetCore;
 using RealEstate.WebAPILayer.Hubs;
+using RealEstate.WebAPILayer.Tools;
+using System.Security.Claims;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpClient();
@@ -27,6 +33,29 @@ builder.Services.AddTransient<IStatisticsService, StatisticsService>();
 builder.Services.AddTransient<IClientService, ClientService>();
 builder.Services.AddTransient<IProductDetailService, ProductDetailService>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
+
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("Jwt"));
+builder.Services.AddSingleton<JwtTokenService>();
+
+var jwtSettings = builder.Configuration.GetSection("Jwt").Get<JwtSettings>() ?? new JwtSettings();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(opt =>
+    {
+        opt.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings.Issuer,
+            ValidAudience = jwtSettings.Audience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key)),
+            NameClaimType = ClaimTypes.Name,
+            RoleClaimType = ClaimTypes.Role
+        };
+    });
+
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
@@ -58,6 +87,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("Cors");
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

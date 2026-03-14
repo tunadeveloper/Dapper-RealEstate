@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -9,6 +10,7 @@ using X.PagedList.Extensions;
 namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class CategoryController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -20,8 +22,8 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index(int? page)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7175/api/Categories");
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
+            var responseMessage = await client.GetAsync("api/Categories");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsondata = await responseMessage.Content.ReadAsStringAsync();
@@ -36,13 +38,13 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryDTO createCategoryDTO)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
             var json = JsonConvert.SerializeObject(createCategoryDTO);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:7175/api/Categories", content);
+            var responseMessage = await client.PostAsync("api/Categories", content);
             if (responseMessage.IsSuccessStatusCode)
             {
-                TempData["Success"] = "Kategori Baþarýyla Eklendi";
+                TempData["Success"] = "Kategori Baï¿½arï¿½yla Eklendi";
                 return RedirectToAction("Index");
             }
             TempData["Error"] = "Kategori Eklenmedi";
@@ -51,11 +53,11 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync($"https://localhost:7175/api/Categories/{id}");
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
+            var responseMessage = await client.DeleteAsync($"api/Categories/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
-                TempData["Success"] = "Kategori Baþarýyla Silindi";
+                TempData["Success"] = "Kategori Baï¿½arï¿½yla Silindi";
                 return RedirectToAction("Index");
             }
             TempData["Error"] = "Kategori Silinmedi";
@@ -64,8 +66,8 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> UpdateCategory(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7175/api/Categories/{id}");
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
+            var responseMessage = await client.GetAsync($"api/Categories/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -85,16 +87,16 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryDTO updateCategoryDTO)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
             var json = JsonConvert.SerializeObject(updateCategoryDTO);
             var content = new StringContent(json,Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("https://localhost:7175/api/Categories", content);
+            var responseMessage = await client.PutAsync("api/Categories", content);
             if (responseMessage.IsSuccessStatusCode)
             {
-                TempData["Success"] = "Kategori Baþarýyla Güncellendi";
+                TempData["Success"] = "Kategori Baï¿½arï¿½yla Gï¿½ncellendi";
                 return RedirectToAction("Index");
             }
-            TempData["Error"] = "Kategori Güncellenmedi";
+            TempData["Error"] = "Kategori Gï¿½ncellenmedi";
             return RedirectToAction("Index");
         }
     }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RealEstate.WebUILayer.DTOs.SubscriberDTOs;
@@ -7,6 +8,7 @@ using X.PagedList.Extensions;
 namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = "Admin")]
     public class SubscriberController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -18,8 +20,8 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index(int? page)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync("https://localhost:7175/api/Subscribers");
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
+            var responseMessage = await client.GetAsync("api/Subscribers");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -39,10 +41,10 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateSubscriber(CreateSubscriberDTO createSubscriberDTO)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
             var jsonData = JsonConvert.SerializeObject(createSubscriberDTO);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PostAsync("https://localhost:7175/api/Subscribers", stringContent);
+            var responseMessage = await client.PostAsync("api/Subscribers", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 TempData["Success"] = "Abone Başarıyla Eklendi";
@@ -54,8 +56,8 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> DeleteSubscriber(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.DeleteAsync($"https://localhost:7175/api/Subscribers/{id}");
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
+            var responseMessage = await client.DeleteAsync($"api/Subscribers/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 TempData["Success"] = "Abone Başarıyla Silindi";
@@ -68,8 +70,8 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> UpdateSubscriber(int id)
         {
-            var client = _httpClientFactory.CreateClient();
-            var responseMessage = await client.GetAsync($"https://localhost:7175/api/Subscribers/{id}");
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
+            var responseMessage = await client.GetAsync($"api/Subscribers/{id}");
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
@@ -82,10 +84,10 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateSubscriber(UpdateSubscriberDTO updateSubscriberDTO)
         {
-            var client = _httpClientFactory.CreateClient();
+            var client = _httpClientFactory.CreateClient("RealEstateApi");
             var jsonData = JsonConvert.SerializeObject(updateSubscriberDTO);
             StringContent stringContent = new StringContent(jsonData, Encoding.UTF8, "application/json");
-            var responseMessage = await client.PutAsync("https://localhost:7175/api/Subscribers", stringContent);
+            var responseMessage = await client.PutAsync("api/Subscribers", stringContent);
             if (responseMessage.IsSuccessStatusCode)
             {
                 TempData["Success"] = "Abone Başarıyla Güncellendi";

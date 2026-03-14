@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.WebAPILayer.DTOs.ContactDTOs;
@@ -24,6 +25,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateContact(CreateContactDTO createContactDTO)
         {
             await _contactService.CreateContactAsync(createContactDTO);
@@ -31,6 +33,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteContact(int id)
         {
             await _contactService.DeleteContactAsync(id);
@@ -38,6 +41,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateContact(UpdateContactDTO updateContactDTO)
         {
             await _contactService.UpdateContactAsync(updateContactDTO);

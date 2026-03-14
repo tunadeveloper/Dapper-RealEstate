@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.WebAPILayer.DTOs.MessageDTOs;
@@ -31,6 +32,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteMessage(int id)
         {
             await _messageService.DeleteMessageAsync(id);
@@ -38,6 +40,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateMessage(UpdateMessageDTO updateMessageDTO)
         {
             await _messageService.UpdateMessageAsync(updateMessageDTO);

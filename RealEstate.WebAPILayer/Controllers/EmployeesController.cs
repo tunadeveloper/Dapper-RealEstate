@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.WebAPILayer.DTOs.EmployeeDTOs;
 using RealEstate.WebAPILayer.Repositories.Employee;
@@ -23,6 +24,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateEmployee(CreateEmployeeDTO createEmployeeDTO)
         {
             await _employeeService.CreateEmployeeAsync(createEmployeeDTO);
@@ -30,6 +32,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteEmployee(int id)
         {
             await _employeeService.DeleteEmployeeAsync(id);
@@ -37,6 +40,7 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateEmployee(UpdateEmployeeDTO updateEmployeeDTO)
         {
             await _employeeService.UpdateEmployeeAsync(updateEmployeeDTO);
