@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.WebUILayer.DTOs.AccountDTOs;
@@ -42,14 +43,15 @@ namespace RealEstate.WebUILayer.Controllers
                     if (tokenModel.Token != null)
                     {
                         claims.Add(new Claim("realestatetoken", tokenModel.Token));
-                        var claimsIdentity = new ClaimsIdentity(claims, JwtBearerDefaults.AuthenticationScheme);
+                        var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                         var authProps = new AuthenticationProperties
                         {
                             ExpiresUtc = tokenModel.ExpireDate,
                             IsPersistent = true
                         };
 
-                        await HttpContext.SignInAsync(JwtBearerDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProps);
+                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+     new ClaimsPrincipal(claimsIdentity), authProps);
                         return RedirectToAction("Index", "Product", new { area = "Admin" });
                     }
                 }

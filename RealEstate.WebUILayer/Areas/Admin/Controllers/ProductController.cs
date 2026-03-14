@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RealEstate.WebUILayer.DTOs.ProductDetailDTOs;
@@ -8,6 +9,7 @@ using X.PagedList.Extensions;
 namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -19,7 +21,10 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index(int? page)
         {
-            var client = _httpClientFactory.CreateClient();
+            var token = User.Claims.FirstOrDefault(x => x.Type == "realestatetoken")?.Value;
+            if (token != null)
+            {
+                var client = _httpClientFactory.CreateClient();
             var responseMessage = await client.GetAsync("https://localhost:7175/api/Products");
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -27,6 +32,7 @@ namespace RealEstate.WebUILayer.Areas.Admin.Controllers
                 var values = JsonConvert.DeserializeObject<List<ResultProductDTO>>(jsonData);
                 int pageNumber = page ?? 1;
                 return View(values.ToPagedList(pageNumber, 10));
+            }
             }
             return View();
         }
