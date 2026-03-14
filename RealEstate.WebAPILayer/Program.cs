@@ -11,10 +11,10 @@ using RealEstate.WebAPILayer.Repositories.Client;
 using RealEstate.WebAPILayer.Repositories.ProductDetail;
 using RealEstate.WebAPILayer.Repositories.Employee;
 using Scalar.AspNetCore;
+using RealEstate.WebAPILayer.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
+builder.Services.AddHttpClient();
 builder.Services.AddTransient<DapperContext>();
 builder.Services.AddTransient<ICategoryService, CategoryService>();
 builder.Services.AddTransient<IProductService, ProductService>();
@@ -28,12 +28,22 @@ builder.Services.AddTransient<IClientService, ClientService>();
 builder.Services.AddTransient<IProductDetailService, ProductDetailService>();
 builder.Services.AddTransient<IEmployeeService, EmployeeService>();
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("Cors", builder =>
+    {
+        builder.AllowAnyHeader()
+        .AllowAnyMethod()
+        .SetIsOriginAllowed((host) => true)
+        .AllowCredentials();
+    });
+});
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
@@ -45,11 +55,11 @@ if (app.Environment.IsDevelopment())
         .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
     });
 }
-
+app.UseCors("Cors");
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapHub<SignalRHub>("/signalrhub");
 app.Run();

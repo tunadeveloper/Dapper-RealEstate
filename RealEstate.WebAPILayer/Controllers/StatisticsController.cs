@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using RealEstate.WebAPILayer.Hubs;
 using RealEstate.WebAPILayer.Repositories.Statistics;
 
 namespace RealEstate.WebAPILayer.Controllers

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using RealEstate.WebAPILayer.DTOs.CategoryDTOs;
+using RealEstate.WebAPILayer.Hubs;
 using RealEstate.WebAPILayer.Repositories.Category;
 
 namespace RealEstate.WebAPILayer.Controllers
@@ -10,7 +12,6 @@ namespace RealEstate.WebAPILayer.Controllers
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
-
         public CategoriesController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
