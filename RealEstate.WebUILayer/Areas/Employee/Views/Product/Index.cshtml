@@ -1,0 +1,124 @@
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using RealEstate.WebUILayer.DTOs.ProductDTOs
+@model IPagedList<ResultProductDTO>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Employee/Views/_EmployeeLayout.cshtml";
+}
+
+<main class="h-full overflow-y-auto">
+    <div class="container px-6 mx-auto grid">
+        <div class="flex justify-between items-center my-6">
+            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                İlan Listesi
+            </h2>
+            <a href="/Employee/Product/CreateProduct" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                Yeni İlan Ekle
+            </a>
+        </div>
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="px-4 py-3 mb-8 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-md flex items-center justify-between" role="alert">
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-3 fill-current" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="font-semibold">@TempData["Success"]</span>
+                </div>
+            </div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="px-4 py-3 mb-8 bg-red-100 border border-red-400 text-red-700 rounded-lg shadow-md flex items-center justify-between" role="alert">
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 mr-3 fill-current" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="font-semibold">@TempData["Error"]</span>
+                </div>
+            </div>
+        }
+
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr class="text-xs font-semibold tracking-wide text-left text-white uppercase border-b dark:border-gray-700 bg-purple-600 dark:text-white dark:bg-purple-800">
+                            <th class="px-4 py-3">#</th>
+                            <th class="px-4 py-3">İlan</th>
+                            <th class="px-4 py-3">Fiyat</th>
+                            <th class="px-4 py-3">Lokasyon</th>
+                            <th class="px-4 py-3">Popülerlik</th>
+                            <th class="px-4 py-3">İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        @foreach (var item in Model)
+                        {
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3 text-sm">
+                                    @item.ProductId
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <div class="flex items-center text-sm">
+                                        <div class="relative hidden w-8 h-8 mr-3 rounded-full md:block">
+                                            <img class="object-cover w-full h-full rounded-full" src="@item.ProductCoverImage" alt="" loading="lazy" />
+                                            <div class="absolute inset-0 rounded-full shadow-inner" aria-hidden="true"></div>
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold" style="max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">@item.ProductTitle</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                     ₺@item.ProductPrice.ToString("N2")
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    @item.ProductCity - @item.ProductDistrict
+                                </td>
+                                <td class="px-4 py-3 text-xs">
+                                    @if (item.ProductIsPopular)
+                                    {
+                                        <span class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                                            Evet
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                                            Hayır
+                                        </span>
+                                    }
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <a href="/Employee/Product/DeleteProduct/@item.ProductId" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">Sil</a>
+                                    <a href="/Employee/Product/ProductDetail/@item.ProductId" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-md focus:outline-none focus:shadow-outline-yellow" style="background-color: orange; transition: background-color 0.15s ease-in-out;">Detaylar</a>
+                                    <a href="/Employee/Product/ProductDetail/@item.ProductId" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 border border-transparent rounded-md focus:outline-none focus:shadow-outline-yellow" style="background-color: orchid; transition: background-color 0.15s ease-in-out;">Sitede Gör</a>
+                                    <a href="/Employee/Product/UpdateProduct/@item.ProductId" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Güncelle</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-purple-800 uppercase border-t dark:border-purple-700 bg-purple-100 sm:grid-cols-9 dark:text-purple-300 dark:bg-purple-900">
+                <span class="flex items-center col-span-12 sm:col-span-3">
+                    Şu anki sayfa @Model.PageNumber / @Model.PageCount Toplam: @Model.TotalItemCount Kayıt
+                </span>
+                <span class="col-span-2"></span>
+
+                <span class="flex col-span-12 mt-2 sm:col-span-4 sm:mt-auto sm:justify-end">
+                    @Html.PagedListPager(Model, page => Url.Action(nameof(Index), new { page }), new PagedListRenderOptions
+                                {
+                                    UlElementClasses = new[] { "inline-flex", "items-center" },
+                                    LiElementClasses = new[] { "px-3", "py-1", "rounded-md", "focus:outline-none", "focus:shadow-outline-purple" },
+                                    ActiveLiElementClass = "text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md"
+                                })
+                </span>
+            </div>
+        </div>
+    </div>
+</main>

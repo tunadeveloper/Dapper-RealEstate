@@ -1,0 +1,135 @@
+@using RealEstate.WebUILayer.DTOs.ProductDTOs
+@model UpdateProductDTO
+@{
+    ViewData["Title"] = "UpdateProduct";
+    Layout = "~/Areas/Employee/Views/_EmployeeLayout.cshtml";
+}
+
+<main class="h-full pb-16 overflow-y-auto">
+    <div class="container px-6 mx-auto grid">
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            İlan Güncelle
+        </h2>
+
+        <form method="post" action="/Employee/Product/UpdateProduct">
+            
+            <input type="hidden" name="ProductId" value="@Model.ProductId" />
+
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">İlan Başlığı</span>
+                    <input type="text"
+                           name="ProductTitle"
+                           value="@Model.ProductTitle"
+                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md border-gray-300 shadow-sm"
+                           placeholder="Başlık giriniz..."
+                           required />
+                </label>
+
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Fiyat</span>
+                    <input type="number" step="0.01"
+                           name="ProductPrice"
+                           value="@Model.ProductPrice.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)"
+                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md border-gray-300 shadow-sm"
+                           placeholder="Fiyat giriniz..."
+                           required />
+                </label>
+
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Kapak Görseli</span>
+                    <input type="text"
+                           name="ProductCoverImage"
+                           value="@Model.ProductCoverImage"
+                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md border-gray-300 shadow-sm"
+                           placeholder="Görsel URL giriniz..."
+                           required />
+                </label>
+
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Şehir</span>
+                    <input type="text"
+                           name="ProductCity"
+                           value="@Model.ProductCity"
+                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md border-gray-300 shadow-sm"
+                           placeholder="Şehir giriniz..."
+                           required />
+                </label>
+
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">İlçe</span>
+                    <input type="text"
+                           name="ProductDistrict"
+                           value="@Model.ProductDistrict"
+                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md border-gray-300 shadow-sm"
+                           placeholder="İlçe giriniz..."
+                           required />
+                </label>
+
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Adres</span>
+                    <input type="text"
+                           name="ProductAddress"
+                           value="@Model.ProductAddress"
+                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md border-gray-300 shadow-sm"
+                           placeholder="Açık adres giriniz..."
+                           required />
+                </label>
+
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Açıklama</span>
+                    <textarea name="ProductDescription"
+                              class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray rounded-md border-gray-300 shadow-sm"
+                              rows="4"
+                              placeholder="İlan açıklaması giriniz..."
+                              required>@Model.ProductDescription</textarea>
+                </label>
+
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">
+                        Popüler İlan mı?
+                    </span>
+                    <select name="ProductIsPopular"
+                            class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray rounded-md border-gray-300 shadow-sm">
+                        @if (Model.ProductIsPopular)
+                        {
+                            <option value="true" selected>Evet</option>
+                            <option value="false">Hayır</option>
+                        }
+                        else
+                        {
+                            <option value="true">Evet</option>
+                            <option value="false" selected>Hayır</option>
+                        }
+                    </select>
+                </label>
+
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Kategori ID</span>
+                    <input type="number"
+                           name="ProductCategory"
+                           value="@Model.ProductCategory"
+                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md border-gray-300 shadow-sm"
+                           placeholder="Kategori ID giriniz..."
+                           required />
+                </label>
+
+                <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
+
+                <div class="mt-6">
+                    <button type="submit"
+                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Güncelle
+                    </button>
+                    <a href="/Employee/Product/Index"
+                       class="ml-2 px-4 py-2 text-sm font-medium leading-5 text-gray-700 transition-colors duration-150 border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline-gray dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+                        İptal ve Geri Dön
+                    </a>
+                </div>
+
+            </div>
+        </form>
+
+    </div>
+</main>

@@ -54,6 +54,18 @@ namespace RealEstate.WebAPILayer.Repositories.Product
             }
             }
 
+        public async Task<List<ResultProductDTO>> GetProductsByEmployeeIdAsync(int employeeId)
+        {
+            string query = "SELECT * FROM Products WHERE EmployeeId=@employeeId ORDER BY ProductId DESC";
+            var parameters = new DynamicParameters();
+            parameters.Add("@employeeId", employeeId);
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ResultProductDTO>(query, parameters);
+                return new List<ResultProductDTO>(values);
+            }
+        }
+
         public async Task<List<ResultProductWithCategoryDTO>> GetAllProductWithCategoryAsync()
         {
             string query = "SELECT ProductId, ProductTitle,ProductPrice,ProductCoverImage,ProductCity,ProductDistrict,ProductAddress,ProductDescription,ProductIsPopular,CategoryName FROM Products INNER JOIN Categories ON Products.ProductCategory=Categories.CategoryId";

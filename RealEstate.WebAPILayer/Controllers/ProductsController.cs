@@ -23,6 +23,20 @@ namespace RealEstate.WebAPILayer.Controllers
             return Ok(values);
         }
 
+        [HttpGet("ByEmployee/{employeeId}")]
+        [Authorize(Roles = "Admin,Employee")]
+        public async Task<IActionResult> GetProductsByEmployee(int employeeId)
+        {
+            if (User.IsInRole("Employee"))
+            {
+                var raw = User.Claims.FirstOrDefault(c => c.Type == "EmployeeId")?.Value;
+                if (!int.TryParse(raw, out var eid) || eid != employeeId)
+                    return Forbid();
+            }
+            var values = await _productService.GetProductsByEmployeeIdAsync(employeeId);
+            return Ok(values);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdProduct(int id)
         {
@@ -31,25 +45,55 @@ namespace RealEstate.WebAPILayer.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> CreateProduct(CreateProductDTO createProductDTO)
         {
+            if (User.IsInRole("Employee"))
+            {
+                var raw = User.Claims.FirstOrDefault(c => c.Type == "EmployeeId")?.Value;
+                if (!int.TryParse(raw, out var eid))
+                    return Forbid();
+                createProductDTO.EmployeeId = eid;
+            }
             await _productService.CreateProductAsync(createProductDTO);
             return Ok("Eklendi");
         }
 
         [HttpPut]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> UpdateProduct(UpdateProductDTO updateProductDTO)
         {
+            if (User.IsInRole("Employee"))
+            {
+                var raw = User.Claims.FirstOrDefault(c => c.Type == "EmployeeId")?.Value;
+                if (!int.TryParse(raw, out var eid))
+                    return Forbid();
+                var existing = await _productService.GetByIdProductAsync(updateProductDTO.ProductId);
+                if (existing == null)
+                    return NotFound();
+                if (existing.EmployeeId != eid)
+                    return Forbid();
+                updateProductDTO.EmployeeId = eid;
+            }
             await _productService.UpdateProductAsync(updateProductDTO);
             return Ok("Güncellendi");
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
+            if (User.IsInRole("Employee"))
+            {
+                var raw = User.Claims.FirstOrDefault(c => c.Type == "EmployeeId")?.Value;
+                if (!int.TryParse(raw, out var eid))
+                    return Forbid();
+                var existing = await _productService.GetByIdProductAsync(id);
+                if (existing == null)
+                    return NotFound();
+                if (existing.EmployeeId != eid)
+                    return Forbid();
+            }
             await _productService.DeleteProductAsync(id);
             return Ok("Silindi");
         }

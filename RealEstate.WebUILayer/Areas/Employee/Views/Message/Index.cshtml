@@ -1,0 +1,71 @@
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using RealEstate.WebUILayer.DTOs.MessageDTOs
+@model IPagedList<ResultMessageDTO>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Employee/Views/_EmployeeLayout.cshtml";
+}
+
+<main class="h-full overflow-y-auto">
+    <div class="container px-6 mx-auto grid">
+        <div class="flex justify-between items-center my-6">
+            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">
+                Gelen mesajlar
+            </h2>
+        </div>
+
+        <div class="w-full overflow-hidden rounded-lg shadow-xs">
+            <div class="w-full overflow-x-auto">
+                <table class="w-full whitespace-no-wrap">
+                    <thead>
+                        <tr class="text-xs font-semibold tracking-wide text-left text-white uppercase border-b dark:border-gray-700 bg-purple-600 dark:text-white dark:bg-purple-800">
+                            <th class="px-4 py-3">#</th>
+                            <th class="px-4 py-3">Gönderen</th>
+                            <th class="px-4 py-3">Email</th>
+                            <th class="px-4 py-3">Konu</th>
+                            <th class="px-4 py-3">Mesaj</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                        @foreach (var item in Model)
+                        {
+                            <tr class="text-gray-700 dark:text-gray-400">
+                                <td class="px-4 py-3 text-sm">
+                                    @item.MessageId
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    <p class="font-semibold">@item.MessageNameSurname</p>
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    @item.MessageEmail
+                                </td>
+                                <td class="px-4 py-3 text-sm">
+                                    @item.MessageSubject
+                                </td>
+                                <td class="px-4 py-3 text-sm max-w-md" style="max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                    @item.MessageDetail
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-purple-800 uppercase border-t dark:border-purple-700 bg-purple-100 sm:grid-cols-9 dark:text-purple-300 dark:bg-purple-900">
+                <span class="flex items-center col-span-12 sm:col-span-3">
+                    Şu anki sayfa @Model.PageNumber / @Model.PageCount Toplam: @Model.TotalItemCount Kayıt
+                </span>
+                <span class="col-span-2"></span>
+
+                <span class="flex col-span-12 mt-2 sm:col-span-4 sm:mt-auto sm:justify-end">
+                    @Html.PagedListPager(Model, page => Url.Action(nameof(Index), new { page }), new PagedListRenderOptions
+                                {
+                                    UlElementClasses = new[] { "inline-flex", "items-center" },
+                                    LiElementClasses = new[] { "px-3", "py-1", "rounded-md", "focus:outline-none", "focus:shadow-outline-purple" },
+                                    ActiveLiElementClass = "text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md"
+                                })
+                </span>
+            </div>
+        </div>
+    </div>
+</main>
