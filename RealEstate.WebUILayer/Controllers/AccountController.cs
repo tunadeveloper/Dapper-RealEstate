@@ -56,14 +56,7 @@ namespace RealEstate.WebUILayer.Controllers
                             authProps
                         );
 
-                        var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
-                        if (string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase))
-                            return RedirectToAction("Index", "Product", new { area = "Admin" });
-
-                        if (string.Equals(role, "Employee", StringComparison.OrdinalIgnoreCase))
-                            return RedirectToAction("Index", "Home", new { area = "Employee" });
-
-                        return RedirectToAction("Index", "Home");
+                        return RedirectByRoleId(claims);
                     }
                 }
             }
@@ -115,7 +108,27 @@ namespace RealEstate.WebUILayer.Controllers
                 authProps
             );
 
-            return RedirectToAction("Index", "Home", new { area = "Employee" });
+            return RedirectByRoleId(claims);
+        }
+
+        private IActionResult RedirectByRoleId(IReadOnlyList<Claim> claims)
+        {
+            var roleIdRaw = claims.FirstOrDefault(x => x.Type == "RoleId")?.Value;
+            if (int.TryParse(roleIdRaw, out var roleId))
+            {
+                if (roleId == 1)
+                    return RedirectToAction("Index", "Product", new { area = "Admin" });
+                if (roleId == 2)
+                    return RedirectToAction("Index", "Home", new { area = "Employee" });
+            }
+
+            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+            if (string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase))
+                return RedirectToAction("Index", "Product", new { area = "Admin" });
+            if (string.Equals(role, "Employee", StringComparison.OrdinalIgnoreCase))
+                return RedirectToAction("Index", "Home", new { area = "Employee" });
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

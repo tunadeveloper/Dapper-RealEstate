@@ -49,9 +49,10 @@ namespace RealEstate.WebAPILayer.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var username = User.Identity?.Name;
             var role = User.FindFirstValue(ClaimTypes.Role);
+            var roleId = User.FindFirstValue("RoleId");
             var employeeId = User.FindFirstValue("EmployeeId");
 
-            return Ok(new { userId, username, role, employeeId });
+            return Ok(new { userId, username, role, roleId, employeeId });
         }
     }
 }

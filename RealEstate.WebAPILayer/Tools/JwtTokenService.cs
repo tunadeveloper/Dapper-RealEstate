@@ -15,12 +15,13 @@ namespace RealEstate.WebAPILayer.Tools
             _settings = settings.Value;
         }
 
-        public TokenResponse CreateToken(int userId, string username, string? roleName, int? employeeId)
+        public TokenResponse CreateToken(int userId, string username, string? roleName, int roleId, int? employeeId)
         {
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
-                new Claim(ClaimTypes.Name, username)
+                new Claim(ClaimTypes.Name, username),
+                new Claim("RoleId", roleId.ToString())
             };
 
             if (!string.IsNullOrWhiteSpace(roleName))

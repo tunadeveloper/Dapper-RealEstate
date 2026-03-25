@@ -20,7 +20,7 @@ namespace RealEstate.WebAPILayer.Repositories.Auth
 
         public async Task<AuthResult> LoginAsync(CreateLoginDTO dto)
         {
-            string userQuery = "SELECT TOP(1) u.UserId, u.Username, u.Password, u.NameSurname, u.Email, r.RoleName FROM Users u INNER JOIN Roles r ON u.RoleId = r.RoleId WHERE u.Username = @username";
+            string userQuery = "SELECT TOP(1) u.UserId, u.Username, u.Password, u.NameSurname, u.Email, u.RoleId, r.RoleName FROM Users u INNER JOIN Roles r ON u.RoleId = r.RoleId WHERE u.Username = @username";
             var parameters = new DynamicParameters();
             parameters.Add("@username", dto.Username);
 
@@ -52,14 +52,18 @@ namespace RealEstate.WebAPILayer.Repositories.Auth
                 int? employeeId = null;
                 if (string.Equals(userRow.RoleName, "Employee", StringComparison.OrdinalIgnoreCase))
                 {
-                    string employeeQuery = "SELECT TOP(1) EmployeeId FROM Employee WHERE EmployeeStatus = 1 AND EmployeeNameSurname = @nameSurname";
                     employeeId = await connection.QueryFirstOrDefaultAsync<int?>(
-                        employeeQuery,
-                        new { nameSurname = userRow.NameSurname }
-                    );
+                        "SELECT TOP(1) EmployeeId FROM Employee WHERE EmployeeStatus = 1 AND EmployeeNameSurname = @nameSurname",
+                        new { nameSurname = userRow.NameSurname });
+                    if (employeeId is null && !string.IsNullOrWhiteSpace(userRow.Email))
+                    {
+                        employeeId = await connection.QueryFirstOrDefaultAsync<int?>(
+                            "SELECT TOP(1) EmployeeId FROM Employee WHERE EmployeeStatus = 1 AND EmployeeEmail = @email",
+                            new { email = userRow.Email });
+                    }
                 }
 
-                var token = _jwtTokenService.CreateToken(userRow.UserId, userRow.Username, userRow.RoleName, employeeId);
+                var token = _jwtTokenService.CreateToken(userRow.UserId, userRow.Username, userRow.RoleName, userRow.RoleId, employeeId);
                 return new AuthResult { StatusCode = StatusCodes.Status200OK, Token = token };
             }
         }
@@ -103,7 +107,11 @@ namespace RealEstate.WebAPILayer.Repositories.Auth
                     };
                 }
 
-                var token = _jwtTokenService.CreateToken(userId, dto.Username, "Employee", null);
+                var registeredRoleName = await connection.QueryFirstOrDefaultAsync<string>(
+                    "SELECT RoleName FROM Roles WHERE RoleId = @roleId",
+                    new { roleId = defaultRoleId });
+
+                var token = _jwtTokenService.CreateToken(userId, dto.Username, registeredRoleName ?? "Employee", defaultRoleId, null);
                 return new AuthResult { StatusCode = StatusCodes.Status200OK, Token = token };
             }
         }
@@ -118,6 +126,7 @@ namespace RealEstate.WebAPILayer.Repositories.Auth
             public string Password { get; set; }
             public string NameSurname { get; set; }
             public string Email { get; set; }
+            public int RoleId { get; set; }
             public string RoleName { get; set; }
         }
     }

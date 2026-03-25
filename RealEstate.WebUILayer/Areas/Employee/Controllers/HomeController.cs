@@ -20,7 +20,7 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
         {
             var employeeIdRaw = User.Claims.FirstOrDefault(x => x.Type == "EmployeeId")?.Value;
             if (!int.TryParse(employeeIdRaw, out var employeeId))
-                return RedirectToAction("Login", "Account", new { area = "" });
+                return View((ResultEmployeeDTO?)null);
 
             var client = _httpClientFactory.CreateClient("RealEstateApi");
             var responseMessage = await client.GetAsync($"api/Employees/{employeeId}");

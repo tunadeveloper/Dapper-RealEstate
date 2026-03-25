@@ -22,12 +22,15 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
         public async Task<IActionResult> Index(int? page)
         {
             var raw = User.Claims.FirstOrDefault(x => x.Type == "EmployeeId")?.Value;
+            var pageNumber = page ?? 1;
             if (!int.TryParse(raw, out var employeeId))
-                return RedirectToAction("Login", "Account", new { area = "" });
+            {
+                var empty = new List<ResultProductDTO>();
+                return View(empty.ToPagedList(pageNumber, 10));
+            }
 
             var client = _httpClientFactory.CreateClient("RealEstateApi");
             var responseMessage = await client.GetAsync($"api/Products/ByEmployee/{employeeId}");
-            var pageNumber = page ?? 1;
             if (!responseMessage.IsSuccessStatusCode)
             {
                 var empty = new List<ResultProductDTO>();
