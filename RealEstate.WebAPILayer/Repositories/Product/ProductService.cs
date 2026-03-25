@@ -107,6 +107,39 @@ namespace RealEstate.WebAPILayer.Repositories.Product
             }
         }
 
+        public async Task<List<ProductPriceChartItemDTO>> GetTopProductsByPriceForDashboardAsync(int take)
+        {
+            string query = @"SELECT TOP (@take)
+  CASE WHEN LEN(ProductTitle) > 40 THEN LEFT(ProductTitle, 40) + N'…' ELSE ProductTitle END AS ProductTitle,
+  ProductPrice
+FROM Products
+ORDER BY ProductPrice DESC";
+            var parameters = new DynamicParameters();
+            parameters.Add("@take", take);
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ProductPriceChartItemDTO>(query, parameters);
+                return new List<ProductPriceChartItemDTO>(values);
+            }
+        }
+
+        public async Task<List<ProductPriceChartItemDTO>> GetPopularProductsByPriceForDashboardAsync(int take)
+        {
+            string query = @"SELECT TOP (@take)
+  CASE WHEN LEN(ProductTitle) > 40 THEN LEFT(ProductTitle, 40) + N'…' ELSE ProductTitle END AS ProductTitle,
+  ProductPrice
+FROM Products
+WHERE ProductIsPopular = 1
+ORDER BY ProductPrice DESC";
+            var parameters = new DynamicParameters();
+            parameters.Add("@take", take);
+            using (var connection = _context.CreateConnection())
+            {
+                var values = await connection.QueryAsync<ProductPriceChartItemDTO>(query, parameters);
+                return new List<ProductPriceChartItemDTO>(values);
+            }
+        }
+
         public async Task UpdateProductAsync(UpdateProductDTO updateProductDTO)
         {
             string query = "UPDATE Products SET ProductTitle=@productTitle, ProductPrice=@productPrice,ProductCoverImage=@productCoverImage,ProductCity=@productCity,ProductDistrict=@productDistrict,ProductAddress=@productAddress,ProductDescription=@productDescription,ProductIsPopular=@productIsPopular,ProductCategory=@productCategory,EmployeeId=@employeeId WHERE ProductId=@productId";

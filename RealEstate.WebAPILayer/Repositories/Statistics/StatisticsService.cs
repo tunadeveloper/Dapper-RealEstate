@@ -1,4 +1,4 @@
-﻿using Dapper;
+using Dapper;
 using RealEstate.WebAPILayer.Context;
 
 namespace RealEstate.WebAPILayer.Repositories.Statistics
@@ -34,7 +34,7 @@ namespace RealEstate.WebAPILayer.Repositories.Statistics
 
         public decimal AverageProductPrice()
         {
-            string query = "SELECT AVERAGE(ProductPrice) FROM Products";
+            string query = "SELECT CAST(ISNULL(AVG(CAST(ProductPrice AS DECIMAL(18,2))), 0) AS DECIMAL(18,2)) FROM Products";
             using (var connection = _context.CreateConnection())
             {
                 var values = connection.QueryFirstOrDefault<decimal>(query);

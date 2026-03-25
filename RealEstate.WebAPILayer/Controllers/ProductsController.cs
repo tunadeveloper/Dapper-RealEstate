@@ -81,5 +81,25 @@ namespace RealEstate.WebAPILayer.Controllers
             var values = await _productService.GetTop3ProductByIsPopularAsync();
             return Ok(values);
         }
+
+        [HttpGet("GetTopByPriceForDashboard")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetTopByPriceForDashboard([FromQuery] int take = 15)
+        {
+            if (take < 1) take = 15;
+            if (take > 100) take = 100;
+            var values = await _productService.GetTopProductsByPriceForDashboardAsync(take);
+            return Ok(values);
+        }
+
+        [HttpGet("GetPopularByPriceForDashboard")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetPopularByPriceForDashboard([FromQuery] int take = 10)
+        {
+            if (take < 1) take = 10;
+            if (take > 100) take = 100;
+            var values = await _productService.GetPopularProductsByPriceForDashboardAsync(take);
+            return Ok(values);
+        }
     }
 }
