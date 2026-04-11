@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RealEstate.WebUILayer.DTOs.ProductDetailDTOs;
 using RealEstate.WebUILayer.DTOs.ProductDTOs;
+using System.Security.Claims;
 using System.Text;
 using X.PagedList.Extensions;
 
@@ -21,24 +22,20 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
 
         public async Task<IActionResult> Index(int? page)
         {
-            var raw = User.Claims.FirstOrDefault(x => x.Type == "EmployeeId")?.Value;
-            var pageNumber = page ?? 1;
-            if (!int.TryParse(raw, out var employeeId))
-            {
-                var empty = new List<ResultProductDTO>();
-                return View(empty.ToPagedList(pageNumber, 10));
-            }
+            var employeeIdRaw = User.Claims.FirstOrDefault(c => c.Type == "EmployeeId")?.Value;
+            if (!int.TryParse(employeeIdRaw, out var employeeId))
+                return RedirectToAction("Login", "Account", new { area = "" });
 
             var client = _httpClientFactory.CreateClient("RealEstateApi");
             var responseMessage = await client.GetAsync($"api/Products/ByEmployee/{employeeId}");
-            if (!responseMessage.IsSuccessStatusCode)
+            if (responseMessage.IsSuccessStatusCode)
             {
-                var empty = new List<ResultProductDTO>();
-                return View(empty.ToPagedList(pageNumber, 10));
+                var jsonData = await responseMessage.Content.ReadAsStringAsync();
+                var values = JsonConvert.DeserializeObject<List<ResultProductDTO>>(jsonData);
+                int pageNumber = page ?? 1;
+                return View(values.ToPagedList(pageNumber, 10));
             }
-            var jsonData = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<List<ResultProductDTO>>(jsonData) ?? new List<ResultProductDTO>();
-            return View(values.ToPagedList(pageNumber, 10));
+            return View();
         }
 
         [HttpGet]
@@ -59,7 +56,7 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
                 TempData["Success"] = "İlan Başarıyla Eklendi";
                 return RedirectToAction("Index");
             }
-            TempData["Error"] = "İlan Eklenmedi";
+            TempData["Error"] = "İlan Eklenemedi";
             return RedirectToAction("Index");
         }
 
@@ -72,7 +69,7 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
                 TempData["Success"] = "İlan Başarıyla Silindi";
                 return RedirectToAction("Index");
             }
-            TempData["Error"] = "İlan Silinmedi";
+            TempData["Error"] = "İlan Silinemedi";
             return RedirectToAction("Index");
         }
 
@@ -109,7 +106,7 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
                 TempData["Success"] = "İlan Başarıyla Güncellendi";
                 return RedirectToAction("Index");
             }
-            TempData["Error"] = "İlan Güncellenmedi";
+            TempData["Error"] = "İlan Güncellenemedi";
             return RedirectToAction("Index");
         }
 

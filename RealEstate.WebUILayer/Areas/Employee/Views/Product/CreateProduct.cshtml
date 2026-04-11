@@ -1,7 +1,7 @@
 @using RealEstate.WebUILayer.DTOs.ProductDTOs
 @model CreateProductDTO
 @{
-    ViewData["Title"] = "CreateProduct";
+    ViewData["Title"] = "Yeni İlan Ekle";
     Layout = "~/Areas/Employee/Views/_EmployeeLayout.cshtml";
 }
 
@@ -13,7 +13,7 @@
 
         <form method="post" action="/Employee/Product/CreateProduct">
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
-                
+
                 <label class="block text-sm">
                     <span class="text-gray-700 dark:text-gray-400">İlan Başlığı</span>
                     <input type="text"
@@ -96,8 +96,6 @@
                            placeholder="Kategori ID giriniz..."
                            required />
                 </label>
-
-                <input type="hidden" name="EmployeeId" value="0" />
 
                 <div class="mt-6">
                     <button type="submit"

@@ -22,5 +22,6 @@ namespace RealEstate.WebAPILayer.Repositories.Statistics
         string CityNameByMaxProductPrice();
         string CityNameByMinProductPrice();
         string EmployeeNameByMinProductCount();
+        int ProductCountByEmployee(int employeeId);
     }
 }

@@ -136,5 +136,18 @@ namespace RealEstate.WebAPILayer.Controllers
         {
             return Ok(_statisticsService.ProductNameByMinProductPrice());
         }
+
+        [HttpGet("ProductCountByEmployee/{employeeId}")]
+        [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin,Employee")]
+        public IActionResult ProductCountByEmployee(int employeeId)
+        {
+            if (User.IsInRole("Employee"))
+            {
+                var raw = User.Claims.FirstOrDefault(c => c.Type == "EmployeeId")?.Value;
+                if (!int.TryParse(raw, out var eid) || eid != employeeId)
+                    return Forbid();
+            }
+            return Ok(_statisticsService.ProductCountByEmployee(employeeId));
+        }
     }
 }

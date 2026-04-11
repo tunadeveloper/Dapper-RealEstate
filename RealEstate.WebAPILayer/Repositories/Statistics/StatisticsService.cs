@@ -211,5 +211,17 @@ namespace RealEstate.WebAPILayer.Repositories.Statistics
                 return values;
             }
         }
+
+        public int ProductCountByEmployee(int employeeId)
+        {
+            string query = "SELECT COUNT(*) FROM Products WHERE EmployeeId = @employeeId";
+            var parameters = new DynamicParameters();
+            parameters.Add("@employeeId", employeeId);
+            using (var connection = _context.CreateConnection())
+            {
+                var values = connection.QueryFirstOrDefault<int>(query, parameters);
+                return values;
+            }
+        }
     }
 }

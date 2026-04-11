@@ -1,7 +1,7 @@
 @using RealEstate.WebUILayer.DTOs.ProductDTOs
 @model UpdateProductDTO
 @{
-    ViewData["Title"] = "UpdateProduct";
+    ViewData["Title"] = "İlan Güncelle";
     Layout = "~/Areas/Employee/Views/_EmployeeLayout.cshtml";
 }
 
@@ -12,8 +12,9 @@
         </h2>
 
         <form method="post" action="/Employee/Product/UpdateProduct">
-            
+
             <input type="hidden" name="ProductId" value="@Model.ProductId" />
+            <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
 
             <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
 
@@ -114,8 +115,6 @@
                            placeholder="Kategori ID giriniz..."
                            required />
                 </label>
-
-                <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
 
                 <div class="mt-6">
                     <button type="submit"
