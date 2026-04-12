@@ -29,8 +29,17 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
             var myProductCountTask = GetStatIntAsync(client, $"api/Statistics/ProductCountByEmployee/{employeeId}");
             var categoryCountTask = GetStatIntAsync(client, "api/Statistics/CategoryCount");
             var differentCityCountTask = GetStatIntAsync(client, "api/Statistics/DifferentCityCount");
+            var differentDistrictCountTask = GetStatIntAsync(client, "api/Statistics/DifferentDistrictCount");
+            var apartmentCountTask = GetStatIntAsync(client, "api/Statistics/ApartmentCount");
+            var avgPriceTask = GetStatDecimalAsync(client, "api/Statistics/AverageProductPrice");
+            var maxPriceTask = GetStatDecimalAsync(client, "api/Statistics/MaxProductPrice");
+            var minPriceTask = GetStatDecimalAsync(client, "api/Statistics/MinProductPrice");
 
-            await Task.WhenAll(totalProductCountTask, myProductCountTask, categoryCountTask, differentCityCountTask);
+            await Task.WhenAll(
+                totalProductCountTask, myProductCountTask,
+                categoryCountTask, differentCityCountTask,
+                differentDistrictCountTask, apartmentCountTask,
+                avgPriceTask, maxPriceTask, minPriceTask);
 
             var model = new EmployeeDashboardViewModel
             {
@@ -38,6 +47,11 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
                 MyProductCount = await myProductCountTask,
                 CategoryCount = await categoryCountTask,
                 DifferentCityCount = await differentCityCountTask,
+                DifferentDistrictCount = await differentDistrictCountTask,
+                ApartmentCount = await apartmentCountTask,
+                AverageProductPrice = await avgPriceTask,
+                MaxProductPrice = await maxPriceTask,
+                MinProductPrice = await minPriceTask,
                 EmployeeName = User.Identity?.Name ?? ""
             };
 
@@ -51,6 +65,15 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
             var json = await response.Content.ReadAsStringAsync();
             if (string.IsNullOrWhiteSpace(json)) return 0;
             return JsonConvert.DeserializeObject<int>(json);
+        }
+
+        private static async Task<decimal> GetStatDecimalAsync(HttpClient client, string url)
+        {
+            var response = await client.GetAsync(url);
+            if (!response.IsSuccessStatusCode) return 0;
+            var json = await response.Content.ReadAsStringAsync();
+            if (string.IsNullOrWhiteSpace(json)) return 0;
+            return JsonConvert.DeserializeObject<decimal>(json);
         }
     }
 }
