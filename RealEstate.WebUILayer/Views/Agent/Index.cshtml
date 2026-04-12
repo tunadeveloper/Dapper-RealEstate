@@ -1,0 +1,33 @@
+@model List<RealEstate.WebUILayer.DTOs.EmployeeDTOs.ResultEmployeeDTO>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Component.InvokeAsync("_PageHeroComponentPartial", new { title = "Danışmanlar", breadcrumbCurrent = "Danışmanlar" })
+
+<section class="ftco-section ftco-agent">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model.Where(e => e.EmployeeStatus))
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="agent">
+                        <div class="img">
+                            <img src="@(string.IsNullOrWhiteSpace(item.EmployeeImageUrl) ? "/uptown/images/team-1.jpg" : item.EmployeeImageUrl)" class="img-fluid" alt="@item.EmployeeNameSurname" />
+                        </div>
+                        <div class="desc">
+                            <h3><a asp-controller="Property" asp-action="Index">@item.EmployeeNameSurname</a></h3>
+                            <p class="h-info"><span class="location">@item.EmployeeTitle</span> <span class="details">&mdash; @item.TotalProductCount İlan</span></p>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (!Model.Any(e => e.EmployeeStatus))
+            {
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Henüz kayıtlı danışman bulunmuyor.</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,40 @@
+@model List<RealEstate.WebUILayer.DTOs.ProductDTOs.ResultProductWithCategoryDTO>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Component.InvokeAsync("_PageHeroComponentPartial", new { title = "İlanlar", breadcrumbCurrent = "İlanlar" })
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4 mb-5">
+                    <div class="property-wrap ftco-animate">
+                        <a asp-action="Detail" asp-route-id="@item.ProductId" class="img" style="background-image: url('@item.ProductCoverImage');"></a>
+                        <div class="text">
+                            <p class="price">
+                                <span class="orig-price">₺@item.ProductPrice.ToString("N2")</span>
+                            </p>
+                            <ul class="property_list">
+                                <li><span class="flaticon-bed"></span>@item.CategoryName</li>
+                            </ul>
+                            <h3><a asp-action="Detail" asp-route-id="@item.ProductId">@item.ProductTitle</a></h3>
+                            <span class="location">@item.ProductCity - @item.ProductDistrict</span>
+                            <a asp-action="Detail" asp-route-id="@item.ProductId" class="d-flex align-items-center justify-content-center btn-custom">
+                                <span class="ion-ios-link"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (!Model.Any())
+            {
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Henüz ilan bulunmuyor.</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>

@@ -1,0 +1,82 @@
+@model RealEstate.WebUILayer.DTOs.ContactDTOs.ResultContactDTO?
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Component.InvokeAsync("_PageHeroComponentPartial", new { title = "İletişim", breadcrumbCurrent = "İletişim" })
+
+<section class="ftco-section contact-section">
+    <div class="container">
+        @if (Model != null)
+        {
+            <div class="row d-flex mb-5 contact-info justify-content-center">
+                <div class="col-md-8">
+                    <div class="row mb-5">
+                        <div class="col-md-4 text-center py-4">
+                            <div class="icon">
+                                <span class="icon-map-o"></span>
+                            </div>
+                            <p><span>Adres:</span> @Model.ContactAddress</p>
+                        </div>
+                        <div class="col-md-4 text-center border-height py-4">
+                            <div class="icon">
+                                <span class="icon-mobile-phone"></span>
+                            </div>
+                            <p><span>Telefon:</span> <a href="tel:@Model.ContactPhoneNumber">@Model.ContactPhoneNumber</a></p>
+                        </div>
+                        <div class="col-md-4 text-center py-4">
+                            <div class="icon">
+                                <span class="icon-envelope-o"></span>
+                            </div>
+                            <p><span>E-posta:</span> <a href="mailto:@Model.ContactEmail">@Model.ContactEmail</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert alert-success text-center">@TempData["Success"]</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger text-center">@TempData["Error"]</div>
+        }
+
+        <div class="row block-9 justify-content-center mb-5">
+            <div class="col-md-8 mb-md-5">
+                <h2 class="text-center">Sorularınız için bize yazın</h2>
+                <form asp-controller="Contact" asp-action="Index" method="post" class="bg-light p-5 contact-form">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <input type="text" name="MessageNameSurname" class="form-control" placeholder="Ad Soyad" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="MessageEmail" class="form-control" placeholder="E-posta" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="MessageSubject" class="form-control" placeholder="Konu" required />
+                    </div>
+                    <div class="form-group">
+                        <textarea name="MessageDetail" cols="30" rows="7" class="form-control" placeholder="Mesajınız" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Gönder" class="btn btn-primary py-3 px-5" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        @if (Model != null && !string.IsNullOrWhiteSpace(Model.ContactMapUrl))
+        {
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div id="map" class="bg-white p-2">
+                        @Html.Raw(Model.ContactMapUrl)
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>

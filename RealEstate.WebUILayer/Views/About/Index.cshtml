@@ -1,0 +1,29 @@
+@model RealEstate.WebUILayer.DTOs.AboutDTOs.ResultAboutDTO?
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@await Component.InvokeAsync("_PageHeroComponentPartial", new { title = "Hakkımızda", breadcrumbCurrent = "Hakkımızda" })
+
+<section class="ftco-section ftco-no-pb">
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-md-6 p-md-5 img img-2 d-flex justify-content-center align-items-center" style="background-image: url('/uptown/images/about.jpg'); min-height: 400px;">
+            </div>
+            <div class="col-md-6 wrap-about py-md-5 ftco-animate">
+                <div class="heading-section p-md-5">
+                    @if (Model != null)
+                    {
+                        <h2 class="mb-4">@Model.AboutTitle</h2>
+                        <p>@Html.Raw(Model.AboutDescription?.Replace("\n", "<br />"))</p>
+                    }
+                    else
+                    {
+                        <h2 class="mb-4">Hakkımızda</h2>
+                        <p>İçerik yüklenemedi. Lütfen daha sonra tekrar deneyin.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

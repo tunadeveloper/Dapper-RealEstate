@@ -1,19 +1,35 @@
+@{
+    var path = ViewContext.HttpContext.Request.Path.Value ?? "";
+    string Active(string prefix) => path.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) ? "active" : "";
+    var homeActive = path == "/" || path.Equals("/Home", StringComparison.OrdinalIgnoreCase) || path.StartsWith("/Home/", StringComparison.OrdinalIgnoreCase);
+}
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="index.html">Uptown</a>
+        <a class="navbar-brand" asp-controller="Home" asp-action="Index">Uptown</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menü
         </button>
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="index.html" class="nav-link">Ana Sayfa</a></li>
-                <li class="nav-item"><a href="about.html" class="nav-link">Hakkımızda</a></li>
-                <li class="nav-item"><a href="agent.html" class="nav-link">Danışmanlar</a></li>
-                <li class="nav-item"><a href="services.html" class="nav-link">Hizmetler</a></li>
-                <li class="nav-item"><a href="properties.html" class="nav-link">İlanlar</a></li>
-                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-                <li class="nav-item"><a href="contact.html" class="nav-link">İletişim</a></li>
+                <li class="nav-item @(homeActive ? "active" : "")">
+                    <a asp-controller="Home" asp-action="Index" class="nav-link">Ana Sayfa</a>
+                </li>
+                <li class="nav-item @Active("/About")">
+                    <a asp-controller="About" asp-action="Index" class="nav-link">Hakkımızda</a>
+                </li>
+                <li class="nav-item @Active("/Agent")">
+                    <a asp-controller="Agent" asp-action="Index" class="nav-link">Danışmanlar</a>
+                </li>
+                <li class="nav-item @Active("/Service")">
+                    <a asp-controller="Service" asp-action="Index" class="nav-link">Hizmetler</a>
+                </li>
+                <li class="nav-item @Active("/Property")">
+                    <a asp-controller="Property" asp-action="Index" class="nav-link">İlanlar</a>
+                </li>
+                <li class="nav-item @Active("/Contact")">
+                    <a asp-controller="Contact" asp-action="Index" class="nav-link">İletişim</a>
+                </li>
             </ul>
         </div>
     </div>
