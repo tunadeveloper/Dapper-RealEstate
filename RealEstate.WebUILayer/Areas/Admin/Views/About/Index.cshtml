@@ -1,95 +1,62 @@
-@using X.PagedList
-@using X.PagedList.Mvc.Core
 @using RealEstate.WebUILayer.DTOs.AboutDTOs
-@model IPagedList<ResultAboutDTO>
+@model UpdateAboutDTO
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Hakkımızda";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
-<main class="h-full overflow-y-auto">
+<main class="h-full pb-16 overflow-y-auto">
     <div class="container px-6 mx-auto grid">
-        <div class="flex justify-between items-center my-6">
-            <h2 class="text-2xl font-semibold text-gray-700 dark:text-gray-200">
-                Hakkımızda Listesi
-            </h2>
-            <a href="/Admin/About/CreateAbout" class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-                Yeni Hakkımızda Ekle
-            </a>
-        </div>
+        <h2 class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
+            Hakkımızda
+        </h2>
 
         @if (TempData["Success"] != null)
         {
-            <div class="px-4 py-3 mb-8 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-md flex items-center justify-between" role="alert">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-3 fill-current" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="font-semibold">@TempData["Success"]</span>
-                </div>
+            <div class="px-4 py-3 mb-6 bg-green-100 border border-green-400 text-green-700 rounded-lg shadow-md" role="alert">
+                <span class="font-semibold">@TempData["Success"]</span>
             </div>
         }
-
         @if (TempData["Error"] != null)
         {
-            <div class="px-4 py-3 mb-8 bg-red-100 border border-red-400 text-red-700 rounded-lg shadow-md flex items-center justify-between" role="alert">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 mr-3 fill-current" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="font-semibold">@TempData["Error"]</span>
-                </div>
+            <div class="px-4 py-3 mb-6 bg-red-100 border border-red-400 text-red-700 rounded-lg shadow-md" role="alert">
+                <span class="font-semibold">@TempData["Error"]</span>
             </div>
         }
 
-        <div class="w-full overflow-hidden rounded-lg shadow-xs">
-            <div class="w-full overflow-x-auto">
-                <table class="w-full whitespace-no-wrap">
-                    <thead>
-                        <tr class="text-xs font-semibold tracking-wide text-left text-white uppercase border-b dark:border-gray-700 bg-purple-600 dark:text-white dark:bg-purple-800">
-                            <th class="px-4 py-3">#</th>
-                            <th class="px-4 py-3">Başlık</th>
-                            <th class="px-4 py-3">Açıklama</th>
-                            <th class="px-4 py-3">İşlemler</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-                        @foreach (var item in Model)
-                        {
-                            <tr class="text-gray-700 dark:text-gray-400">
-                                <td class="px-4 py-3 text-sm">
-                                    @item.AboutId
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    @item.AboutTitle
-                                </td>
-                                <td class="px-4 py-3 text-sm" style="max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                                    @item.AboutDescription
-                                </td>
-                                <td class="px-4 py-3 text-sm">
-                                    <a href="/Admin/About/DeleteAbout/@item.AboutId" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-md active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">Sil</a>
-                                    <a href="/Admin/About/UpdateAbout/@item.AboutId" class="px-3 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-md active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">Güncelle</a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="grid px-4 py-3 text-xs font-semibold tracking-wide text-purple-800 uppercase border-t dark:border-purple-700 bg-purple-100 sm:grid-cols-9 dark:text-purple-300 dark:bg-purple-900">
-                <span class="flex items-center col-span-12 sm:col-span-3">
-                    Şu anki sayfa @Model.PageNumber / @Model.PageCount Toplam: @Model.TotalItemCount Kayıt
-                </span>
-                <span class="col-span-2"></span>
+        <form method="post" asp-area="Admin" asp-controller="About" asp-action="Index">
+            <input type="hidden" name="AboutId" value="@Model.AboutId" />
 
-                <span class="flex col-span-12 mt-2 sm:col-span-4 sm:mt-auto sm:justify-end">
-                    @Html.PagedListPager(Model, page => Url.Action(nameof(Index), new { page }), new PagedListRenderOptions
-                                {
-                                    UlElementClasses = new[] { "inline-flex", "items-center" },
-                                    LiElementClasses = new[] { "px-3", "py-1", "rounded-md", "focus:outline-none", "focus:shadow-outline-purple" },
-                                    ActiveLiElementClass = "text-white transition-colors duration-150 bg-purple-600 border border-r-0 border-purple-600 rounded-md"
-                                })
-                </span>
+            <div class="px-4 py-3 mb-8 bg-white rounded-lg shadow-md dark:bg-gray-800">
+
+                <label class="block text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Başlık</span>
+                    <input type="text"
+                           name="AboutTitle"
+                           value="@Model.AboutTitle"
+                           class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input rounded-md border-gray-300 shadow-sm"
+                           placeholder="Başlık giriniz..."
+                           required />
+                </label>
+
+                <label class="block mt-4 text-sm">
+                    <span class="text-gray-700 dark:text-gray-400">Açıklama</span>
+                    <textarea name="AboutDescription"
+                              class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-textarea focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray rounded-md border-gray-300 shadow-sm"
+                              rows="6"
+                              placeholder="Açıklama giriniz..."
+                              required>@Model.AboutDescription</textarea>
+                </label>
+
+                <div class="mt-6">
+                    <button type="submit"
+                            class="px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
+                        Kaydet
+                    </button>
+                </div>
+
             </div>
-        </div>
+        </form>
+
     </div>
 </main>
