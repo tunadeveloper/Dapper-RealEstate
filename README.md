@@ -14,12 +14,20 @@
 
 ## 📖 Proje Hakkında
 
-Bu proje, emlak ilanlarının yönetimi, istatistiksel analizi ve rol bazlı panel deneyimi için geliştirilmiş iki katmanlı bir platformdur:
+Bu proje, emlak ilanlarının yönetimi, istatistiksel analizi ve rol bazlı panel deneyimi için geliştirdiğim iki katmanlı bir platformdur:
 
-- `RealEstate.WebAPILayer`: Dapper + SQL Server ile veri erişimi, JWT üretimi, rol bazlı authorization, istatistik endpointleri
-- `RealEstate.WebUILayer`: ASP.NET Core MVC (Razor) arayüzü, Admin ve Employee alanları, API tüketimi
+- **RealEstate.WebAPILayer**:  
+  - Dapper + SQL Server ile veri erişimi sağladım  
+  - JWT üretimini gerçekleştirdim  
+  - Rol bazlı authorization yapısını kurdum  
+  - İstatistik endpointlerini geliştirdim  
 
-Sistemde kimlik doğrulama JWT ile API tarafında yapılır; UI tarafında ise bu token cookie kimliğine dönüştürülerek oturum sürdürülür. Özellikle `AccountController` içinde claim normalizasyonu (`role/RoleId/EmployeeId`) ve role göre yönlendirme (Admin -> `/Admin/Product`, Employee -> `/Employee/Home`) akışı kurgulanmıştır.
+- **RealEstate.WebUILayer**:  
+  - ASP.NET Core MVC (Razor) arayüzünü geliştirdim  
+  - Admin ve Employee alanlarını oluşturdum  
+  - API tüketimini uyguladım  
+
+Sistemde kimlik doğrulamayı JWT ile API tarafında gerçekleştirdim; UI tarafında ise bu token’ı cookie kimliğine dönüştürerek oturumun devamlılığını sağladım. Özellikle `AccountController` içinde claim normalizasyonunu (`role/RoleId/EmployeeId`) yaptım ve role göre yönlendirme (Admin -> `/Admin/Product`, Employee -> `/Employee/Home`) akışını yaptım.
 
 ## 🚀 Kullanılan Teknolojiler
 
@@ -94,68 +102,3 @@ Mimari olarak:
 15. RealEstate.WebUILayer   : Razor Views, Area bazlı paneller, HttpClient ile API tüketimi
 16. Pattern                 : Repository + DTO + Role-based access + claim-temelli yönlendirme
 ```
-
-## 🧭 Proje Yapısı
-
-```text
-RealEstate.WebAPILayer/
-  Controllers/
-  Repositories/
-  DTOs/
-  Context/
-  Tools/
-  Hubs/
-
-RealEstate.WebUILayer/
-  Controllers/
-  Areas/
-    Admin/
-    Employee/
-  Views/
-  DTOs/
-  Infrastructure/
-```
-
-## ⚙️ Kurulum ve Çalıştırma
-
-### 1) Gereksinimler
-
-- .NET SDK 10
-- SQL Server (connection string'e uygun)
-
-### 2) Connection String
-
-`RealEstate.WebAPILayer/appsettings.json` içinde:
-
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=...;Database=DapperRealEstate;..."
-}
-```
-
-### 3) Projeleri Çalıştır
-
-API:
-
-```bash
-dotnet run --project RealEstate.WebAPILayer
-```
-
-UI:
-
-```bash
-dotnet run --project RealEstate.WebUILayer
-```
-
-Varsayılan geliştirme adresleri:
-
-- API: `https://localhost:7175` (Scalar: `/scalar/v1`)
-- UI: `https://localhost:7211`
-
-## 🎯 Kısa Notlar
-
-- UI katmanı API'ye `IHttpClientFactory` ile bağlanır.
-- API endpointleri rol bazlı koruma kullanır (`Admin`, `Employee`).
-- Employee tarafında ilan işlemleri claim içindeki `EmployeeId` ile sınırlandırılır.
-- Dashboard ekranları birden fazla istatistik endpointini paralel çağırarak beslenir.
-
