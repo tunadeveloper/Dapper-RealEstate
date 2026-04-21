@@ -102,10 +102,12 @@ Mimari olarak:
 15. RealEstate.WebUILayer   : Razor Views, Area bazlı paneller, HttpClient ile API tüketimi
 16. Pattern                 : Repository + DTO + Role-based access + claim-temelli yönlendirme
 ```
-
+# 🏠 Anasayfa
 <img width="1920" height="1408" alt="Image" src="https://github.com/user-attachments/assets/84a2ef10-654f-4b44-9d23-dda75828a23e" />
 <img width="1920" height="2425" alt="Image" src="https://github.com/user-attachments/assets/3f079bae-3929-4f29-b1d7-e2da48ce0083" />
 <img width="1920" height="1808" alt="Image" src="https://github.com/user-attachments/assets/282377af-aafd-4158-b997-070dc12398f3" />
+
+# 🛠️ Yönetici Paneli
 <img width="1915" height="929" alt="Image" src="https://github.com/user-attachments/assets/d26a3a93-6dd8-4633-b40a-c3905f3c489b" />
 <img width="1913" height="936" alt="Image" src="https://github.com/user-attachments/assets/3b46c53b-6af6-4098-b8f8-1a10c9a2eb33" />
 <img width="1911" height="939" alt="Image" src="https://github.com/user-attachments/assets/bf2c85be-8db5-4e5e-b504-378b8a178a3b" />
@@ -114,7 +116,11 @@ Mimari olarak:
 <img width="1909" height="924" alt="Image" src="https://github.com/user-attachments/assets/01f63c73-6d9c-4ab6-a1d7-a9b13188d27c" />
 <img width="1909" height="932" alt="Image" src="https://github.com/user-attachments/assets/2285461c-de54-4f10-b8a2-40a63659b380" />
 <img width="1914" height="934" alt="Image" src="https://github.com/user-attachments/assets/198f03b6-af31-4cd7-8e63-631ef34f0089" />
+
+# 👔 Danışman Paneli
 <img width="1915" height="934" alt="Image" src="https://github.com/user-attachments/assets/85945065-a4f9-405b-9b8f-6c46b83f69eb" />
 <img width="1901" height="933" alt="Image" src="https://github.com/user-attachments/assets/5a5a9a21-2231-408b-846e-b700ba47e6d6" />
 <img width="1900" height="933" alt="Image" src="https://github.com/user-attachments/assets/c6472a12-4789-4805-9bf8-8311d3280b6d" />
+
+# 🔌 Scalar (Endpointler)
 <img width="1897" height="921" alt="Image" src="https://github.com/user-attachments/assets/a93726c4-f44e-444c-bfc7-e69e9d407f0b" />
