@@ -22,9 +22,13 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
 
         public async Task<IActionResult> Index(int? page)
         {
+            int pageNumber = page ?? 1;
             var employeeIdRaw = User.Claims.FirstOrDefault(c => c.Type == "EmployeeId")?.Value;
             if (!int.TryParse(employeeIdRaw, out var employeeId))
-                return RedirectToAction("Login", "Account", new { area = "" });
+            {
+                TempData["Error"] = "Hesabınız bir çalışan kaydıyla eşleşmediği için yalnızca size ait ilanlar listelenemiyor.";
+                return View(new List<ResultProductDTO>().ToPagedList(pageNumber, 10));
+            }
 
             var client = _httpClientFactory.CreateClient("RealEstateApi");
             var responseMessage = await client.GetAsync($"api/Products/ByEmployee/{employeeId}");
@@ -32,10 +36,10 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
             {
                 var jsonData = await responseMessage.Content.ReadAsStringAsync();
                 var values = JsonConvert.DeserializeObject<List<ResultProductDTO>>(jsonData);
-                int pageNumber = page ?? 1;
                 return View(values.ToPagedList(pageNumber, 10));
             }
-            return View();
+            TempData["Error"] = "İlanlar yüklenirken bir hata oluştu.";
+            return View(new List<ResultProductDTO>().ToPagedList(pageNumber, 10));
         }
 
         [HttpGet]

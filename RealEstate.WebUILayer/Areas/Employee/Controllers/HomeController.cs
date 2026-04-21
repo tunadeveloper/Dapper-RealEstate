@@ -20,13 +20,14 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
         public async Task<IActionResult> Index()
         {
             var employeeIdRaw = User.Claims.FirstOrDefault(c => c.Type == "EmployeeId")?.Value;
-            if (!int.TryParse(employeeIdRaw, out var employeeId))
-                return RedirectToAction("Login", "Account", new { area = "" });
+            var hasEmployeeId = int.TryParse(employeeIdRaw, out var employeeId);
 
             var client = _httpClientFactory.CreateClient("RealEstateApi");
 
             var totalProductCountTask = GetStatIntAsync(client, "api/Statistics/ProductCount");
-            var myProductCountTask = GetStatIntAsync(client, $"api/Statistics/ProductCountByEmployee/{employeeId}");
+            var myProductCountTask = hasEmployeeId
+                ? GetStatIntAsync(client, $"api/Statistics/ProductCountByEmployee/{employeeId}")
+                : Task.FromResult(0);
             var categoryCountTask = GetStatIntAsync(client, "api/Statistics/CategoryCount");
             var differentCityCountTask = GetStatIntAsync(client, "api/Statistics/DifferentCityCount");
             var differentDistrictCountTask = GetStatIntAsync(client, "api/Statistics/DifferentDistrictCount");
@@ -34,6 +35,9 @@ namespace RealEstate.WebUILayer.Areas.Employee.Controllers
             var avgPriceTask = GetStatDecimalAsync(client, "api/Statistics/AverageProductPrice");
             var maxPriceTask = GetStatDecimalAsync(client, "api/Statistics/MaxProductPrice");
             var minPriceTask = GetStatDecimalAsync(client, "api/Statistics/MinProductPrice");
+
+            if (!hasEmployeeId)
+                TempData["Warning"] = "Hesabınız bir çalışan kaydıyla eşleşmediği için kişisel ilan istatistikleri gösterilemiyor.";
 
             await Task.WhenAll(
                 totalProductCountTask, myProductCountTask,

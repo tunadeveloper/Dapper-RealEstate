@@ -39,6 +39,9 @@ namespace RealEstate.WebUILayer.Controllers
                     JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
                     var token = handler.ReadJwtToken(tokenModel.Token);
                     var claims = token.Claims.ToList();
+                    EnsureNormalizedClaim(claims, ClaimTypes.Role, "role");
+                    EnsureNormalizedClaim(claims, "RoleId", "roleid");
+                    EnsureNormalizedClaim(claims, "EmployeeId", "employeeid");
 
                     if (tokenModel.Token != null)
                     {
@@ -93,6 +96,9 @@ namespace RealEstate.WebUILayer.Controllers
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(tokenModel.Token);
             var claims = token.Claims.ToList();
+            EnsureNormalizedClaim(claims, ClaimTypes.Role, "role");
+            EnsureNormalizedClaim(claims, "RoleId", "roleid");
+            EnsureNormalizedClaim(claims, "EmployeeId", "employeeid");
             claims.Add(new Claim("realestatetoken", tokenModel.Token));
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -113,7 +119,7 @@ namespace RealEstate.WebUILayer.Controllers
 
         private IActionResult RedirectByRoleId(IReadOnlyList<Claim> claims)
         {
-            var roleIdRaw = claims.FirstOrDefault(x => x.Type == "RoleId")?.Value;
+            var roleIdRaw = GetClaimValue(claims, "RoleId", "roleid");
             if (int.TryParse(roleIdRaw, out var roleId))
             {
                 if (roleId == 1)
@@ -122,7 +128,7 @@ namespace RealEstate.WebUILayer.Controllers
                     return RedirectToAction("Index", "Home", new { area = "Employee" });
             }
 
-            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
+            var role = GetClaimValue(claims, ClaimTypes.Role, "role");
             if (string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase))
                 return RedirectToAction("Index", "Product", new { area = "Admin" });
             if (string.Equals(role, "Employee", StringComparison.OrdinalIgnoreCase))
@@ -136,6 +142,29 @@ namespace RealEstate.WebUILayer.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
+        }
+
+        private static void EnsureNormalizedClaim(List<Claim> claims, string targetType, params string[] alternativeTypes)
+        {
+            if (claims.Any(x => string.Equals(x.Type, targetType, StringComparison.OrdinalIgnoreCase) && !string.IsNullOrWhiteSpace(x.Value)))
+                return;
+
+            var normalized = claims.FirstOrDefault(x =>
+                alternativeTypes.Any(t => string.Equals(x.Type, t, StringComparison.OrdinalIgnoreCase)) ||
+                x.Type.EndsWith($"/{targetType}", StringComparison.OrdinalIgnoreCase));
+
+            if (normalized is not null && !string.IsNullOrWhiteSpace(normalized.Value))
+                claims.Add(new Claim(targetType, normalized.Value));
+        }
+
+        private static string? GetClaimValue(IReadOnlyList<Claim> claims, string primaryType, params string[] alternativeTypes)
+        {
+            var claim = claims.FirstOrDefault(x =>
+                string.Equals(x.Type, primaryType, StringComparison.OrdinalIgnoreCase) ||
+                alternativeTypes.Any(t => string.Equals(x.Type, t, StringComparison.OrdinalIgnoreCase)) ||
+                x.Type.EndsWith($"/{primaryType}", StringComparison.OrdinalIgnoreCase));
+
+            return claim?.Value;
         }
     }
 }
